@@ -3,33 +3,34 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import Constant from 'expo-constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { getQueues } from '../store/actions'
+import CarImage from '../CarImage'
 
 function Home() {
   const dispatch = useDispatch()
   const queues = useSelector(state => state.queues)
 
-  useEffect(() => {
-    dispatch(getQueues())
-  }, [dispatch, getQueues])
-  console.log(queues)
+  // useEffect(() => {
+  //   dispatch(getQueues())
+  // }, [dispatch, getQueues])
+  // console.log(queues)
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text>Queue On Progress:</Text>
-        <Text>20</Text>
+      <View style={styles.main}>
+        <Text style={styles.font, styles.title}>Booking</Text>
+        <Text style={styles.font}>Queue On Progress: 20</Text>
       </View>
 
-      <View style={styles.main}>
-        <Text>Welcome</Text>
+      <View>
+        <CarImage />
       </View>
 
       <View style={styles.option}>
         <TouchableOpacity>
-          <Text>Choose Car Wash</Text>
+          <Text style={styles.font}>Choose Car Wash</Text>
         </TouchableOpacity>
         <TouchableOpacity>
-          <Text>My Booked</Text>
+          <Text style={styles.font}>My Booked</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -39,17 +40,22 @@ function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'aqua',
+    backgroundColor: '#3d4558',
     paddingTop: Constant.statusBarHeight,
-    padding: 20
+    padding: 20,
   },
-  header: {
-    paddingTop: 20,
-    display: "flex",
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+  font: {
+    color: '#eff2f6'
+  },
+  title: {
+    color: '#eff2f6',
+    fontSize: 50,
+    fontWeight: '700'
   },
   main: {
+    paddingTop: 50
+  },
+  image: {
 
   },
   option: {
