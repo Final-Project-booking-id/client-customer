@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getMerchants } from '../store/actions'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import Constant from 'expo-constants'
 import { useNavigation } from '@react-navigation/native'
@@ -9,22 +11,27 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 
 function merchantPage({ navigation: { goBack } }) {
   const navigation = useNavigation()
+  const dispatch = useDispatch()
 
+  useEffect(() => {
+    dispatch(getMerchants())
+  }, [dispatch])
+  const merchants = useSelector(state => state.merchants)
   function goToHome() {
     navigation.navigate('Home')
   }
 
-  function goToMap() {
-    navigation.navigate('Map')
+  function goToMap(destination) {
+    navigation.navigate('Map', { destination })
   }
 
-  function goToService() {
-    navigation.navigate('Service')
+  function goToService(id) {
+    navigation.navigate('Service', { id })
   }
 
   return (
     <View style={styles.container}>
-      <View style={{ backgroundColor: '#3d4558'}}>
+      <View style={{ backgroundColor: '#3d4558' }}>
         <View style={styles.header}>
           <TouchableOpacity
             onPress={goToHome}
@@ -56,158 +63,42 @@ function merchantPage({ navigation: { goBack } }) {
       </View>
       <ScrollView style={styles.main}>
         {/* Ini nanti tinggal di map berdasarkan jumlah merchat */}
-        <View style={styles.card}>
-          <Text style={styles.title}>Car Wash 999</Text>
-          <View style={styles.option}>
-            <TouchableOpacity
-              onPress={goToService}
-            >
-              <LinearGradient
-                colors={['#f86674', '#f9af8b']}
-                style={styles.primarybtn}
-                start={{ x: 0.1, y: 0.1 }}
-                end={{ x: 1.0, y: 0.1 }}
-              >
-                <Text style={styles.font}>Services</Text>
-              </LinearGradient>
-            </TouchableOpacity>
+        {
+          merchants.map(merchant => {
+            return (<View style={styles.card}>
+              <Text style={styles.title}>{merchant.name}</Text>
+              <View style={styles.option}>
+                <TouchableOpacity
+                  onPress={() => goToService(merchant.id)}
+                >
+                  <LinearGradient
+                    colors={['#f86674', '#f9af8b']}
+                    style={styles.primarybtn}
+                    start={{ x: 0.1, y: 0.1 }}
+                    end={{ x: 1.0, y: 0.1 }}
+                  >
+                    <Text style={styles.font}>Services</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
 
-            <LinearGradient
-              colors={['#f86674', '#f9af8b']}
-              style={styles.borderbtn}
-              start={{ x: 0.1, y: 0.1 }}
-              end={{ x: 1.0, y: 0.1 }}
-            >
-              <TouchableOpacity
-                style={styles.secondarybtn}
-                onPress={goToMap}
-              >
-                <Text style={styles.font}>Direction</Text>
-              </TouchableOpacity>
-            </LinearGradient>
-          </View>
-        </View>
-        {/*  sampai sini */}
-        <View style={styles.card}>
-          <Text style={styles.title}>Lutv Carwash</Text>
-          <View style={styles.option}>
-            <TouchableOpacity
-              onPress={goToService}
-            >
-              <LinearGradient
-                colors={['#f86674', '#f9af8b']}
-                style={styles.primarybtn}
-                start={{ x: 0.1, y: 0.1 }}
-                end={{ x: 1.0, y: 0.1 }}
-              >
-                <Text style={styles.font}>Services</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-            <LinearGradient
-              colors={['#f86674', '#f9af8b']}
-              style={styles.borderbtn}
-              start={{ x: 0.1, y: 0.1 }}
-              end={{ x: 1.0, y: 0.1 }}
-            >
-              <TouchableOpacity
-                style={styles.secondarybtn}
-                onPress={goToMap}
-              >
-                <Text style={styles.font}>Direction</Text>
-              </TouchableOpacity>
-            </LinearGradient>
-          </View>
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.title}>Steam Motor Depan BSI</Text>
-          <View style={styles.option}>
-            <TouchableOpacity
-              onPress={goToService}
-            >
-              <LinearGradient
-                colors={['#f86674', '#f9af8b']}
-                style={styles.primarybtn}
-                start={{ x: 0.1, y: 0.1 }}
-                end={{ x: 1.0, y: 0.1 }}
-              >
-                <Text style={styles.font}>Services</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-            <LinearGradient
-              colors={['#f86674', '#f9af8b']}
-              style={styles.borderbtn}
-              start={{ x: 0.1, y: 0.1 }}
-              end={{ x: 1.0, y: 0.1 }}
-            >
-              <TouchableOpacity
-                style={styles.secondarybtn}
-                onPress={goToMap}
-              >
-                <Text style={styles.font}>Direction</Text>
-              </TouchableOpacity>
-            </LinearGradient>
-          </View>
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.title}>Duta Motor</Text>
-          <View style={styles.option}>
-            <TouchableOpacity
-              onPress={goToService}
-            >
-              <LinearGradient
-                colors={['#f86674', '#f9af8b']}
-                style={styles.primarybtn}
-                start={{ x: 0.1, y: 0.1 }}
-                end={{ x: 1.0, y: 0.1 }}
-              >
-                <Text style={styles.font}>Services</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-            <LinearGradient
-              colors={['#f86674', '#f9af8b']}
-              style={styles.borderbtn}
-              start={{ x: 0.1, y: 0.1 }}
-              end={{ x: 1.0, y: 0.1 }}
-            >
-              <TouchableOpacity
-                style={styles.secondarybtn}
-                onPress={goToMap}
-              >
-                <Text style={styles.font}>Direction</Text>
-              </TouchableOpacity>
-            </LinearGradient>
-          </View>
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.title}>Keppo Steam</Text>
-          <View style={styles.option}>
-            <TouchableOpacity
-              onPress={goToService}
-            >
-              <LinearGradient
-                colors={['#f86674', '#f9af8b']}
-                style={styles.primarybtn}
-                start={{ x: 0.1, y: 0.1 }}
-                end={{ x: 1.0, y: 0.1 }}
-              >
-                <Text style={styles.font}>Services</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-            <LinearGradient
-              colors={['#f86674', '#f9af8b']}
-              style={styles.borderbtn}
-              start={{ x: 0.1, y: 0.1 }}
-              end={{ x: 1.0, y: 0.1 }}
-            >
-              <TouchableOpacity
-                style={styles.secondarybtn}
-                onPress={goToMap}
-              >
-                <Text style={styles.font}>Direction</Text>
-              </TouchableOpacity>
-            </LinearGradient>
-          </View>
-        </View>
+                <LinearGradient
+                  colors={['#f86674', '#f9af8b']}
+                  style={styles.borderbtn}
+                  start={{ x: 0.1, y: 0.1 }}
+                  end={{ x: 1.0, y: 0.1 }}
+                >
+                  <TouchableOpacity
+                    style={styles.secondarybtn}
+                    onPress={() => goToMap(merchant.address)}
+                  >
+                    <Text style={styles.font}>Direction</Text>
+                  </TouchableOpacity>
+                </LinearGradient>
+              </View>
+            </View>)
+          })
+        }
+
       </ScrollView>
     </View>
   )

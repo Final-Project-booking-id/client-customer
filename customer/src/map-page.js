@@ -5,36 +5,50 @@ import MapView from 'react-native-maps'
 import MapViewDirections from 'react-native-maps-directions'
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
+import { getMyCoordinate } from '../store/actions'
+let options = {
+  enableHighAccuracy: true
+};
+let currentLocation = []
+function success(pos) {
+  let crd = pos.coords;
 
-let positionNow
-navigator.geolocation.getCurrentPosition(position => {
-  positionNow = position.coords.latitude + ',' + position.coords.longitude
-})
+  currentLocation.push(crd.longitude)
+  currentLocation.push(crd.latitude)
+  console.log('Your current position is:');
+  console.log(`Latitude : ${crd.latitude}`);
+  console.log(`Longitude: ${crd.longitude}`);
+  console.log(`More or less ${crd.accuracy} meters.`);
+}
 
-export default function MapPage() {
-  const dispatch = useDispatch()
-  const [currentLocation, setCurrentLocation] = useState(positionNow)
-  const destination = useSelector(state => state.destination)
+function error(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+}
+navigator.geolocation.getCurrentPosition(success, error, options);
+export default function MapPage({ route }) {
+  // const dispatch = useDispatch()
 
+  const { destination } = route.params
+  // console.log('ini', destination)
   return (
     <>
       <View style={styles.container}>
         <MapView style={styles.map}
           showsUserLocation={true}
           initialRegion={{
-            latitude: +currentLocation.split(",")[0],
-            longitude: +currentLocation.split(",")[1],
+            latitude: +currentLocation[0],
+            longitude: +currentLocation[1],
             latitudeDelta: 0.2,
             longitudeDelta: 0.2,
           }}
           zoomControlEnabled={true}
         >
-          <MapView.Marker coordinate={{ latitude: +currentLocation.split(",")[0], longitude: +currentLocation.split(",")[1] }} title={'My Location'}>
+          <MapView.Marker coordinate={{ latitude: +currentLocation[0], longitude: +currentLocation[1] }} title={'My Location'}>
             <Image source={require('../assets/pinme.png')} style={{ height: 40, width: 40, resizeMode: 'contain', zIndex: 9999 }} />
           </MapView.Marker>
 
           <MapViewDirections
-            origin={{ latitude: +currentLocation.split(",")[0], longitude: +currentLocation.split(",")[1] }}
+            origin={{ latitude: +currentLocation, longitude: +currentLocation[1] }}
             destination={{ latitude: +destination.split(",")[0], longitude: +destination.split(",")[1] }}
             apikey={'AIzaSyBfRZ4teg55GyBfA7mtR-NlIDugDXYELSc'}
             strokeWidth={4}
