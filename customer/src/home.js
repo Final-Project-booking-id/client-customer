@@ -17,7 +17,7 @@ function home() {
   return (
     <View style={styles.container}>
       <View style={styles.main}>
-        <Text style={styles.font, styles.title}>Booking</Text>
+        <Text style={styles.font, styles.title}>Washry</Text>
         <Text style={styles.font}>Queue On Progress: 20</Text>
       </View>
 

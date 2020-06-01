@@ -4,6 +4,8 @@ import Constant from 'expo-constants'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faChevronLeft, faLocationArrow } from '@fortawesome/free-solid-svg-icons'
 import { useNavigation } from '@react-navigation/native'
+import { LinearGradient } from 'expo-linear-gradient'
+import { ScrollView } from 'react-native-gesture-handler'
 
 
 function detailPage({ navigation: { goBack } }) {
@@ -20,6 +22,7 @@ function detailPage({ navigation: { goBack } }) {
         paddingBottom: 30
       }}>
         <View style={styles.detail}>
+          {/* Option */}
           <View style={styles.options}>
             <TouchableOpacity
               onPress={() => goBack()}
@@ -48,10 +51,66 @@ function detailPage({ navigation: { goBack } }) {
             >
               <Text>
                 <FontAwesomeIcon
-                  style={{ color: '#f74658' }}
+                  style={{ color: '#ffd26b' }}
                   icon={faLocationArrow}
                 />
               </Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Title */}
+          <View style={{ width: '100%', alignItems: 'center' }}>
+            <Text
+              style={{
+                fontSize: 15,
+                textAlign: 'center',
+                color: '#c6c6c6'
+              }}
+            >
+              Rp. 150000
+            </Text>
+            <Text
+              style={{
+                fontSize: 40,
+                textAlign: 'center',
+                color: '#2a2a2a'
+              }}
+            >
+              Premium Car Wash
+            </Text>
+            <Text
+              style={{
+                fontSize: 15,
+                textAlign: 'center',
+                color: '#4c4c4c'
+              }}
+            >
+              60 minute
+            </Text>
+          </View>
+
+          {/* Desc */}
+          <View style={{ width: '100%', alignItems: 'center' }}>
+            <View style={styles.topDesc}></View>
+            <Text style={styles.desc}>
+              Premium Auto Detailing hadir dengan Premium Car Wash, Interior Vacuum, Engine Cleaning, Wax Protection, Tire Polish, Water Spot dan didukung oleh pegawai yang berpengalaman dibidangnya
+            </Text>
+            <View style={styles.bottomDesc}></View>
+          </View>
+
+          {/* Button */}
+          <View style={{ alignItems: 'center' }}>
+            <TouchableOpacity
+            // onPress={}
+            >
+              <LinearGradient
+                colors={['#f86674', '#f9af8b']}
+                style={styles.primarybtn}
+                start={{ x: 0.1, y: 0.1 }}
+                end={{ x: 1.0, y: 0.1 }}
+              >
+                <Text style={styles.font}>Book Now</Text>
+              </LinearGradient>
             </TouchableOpacity>
           </View>
         </View>
@@ -74,13 +133,53 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 20,
     backgroundColor: '#ffffff',
+    justifyContent: 'space-between',
   },
   options: {
     height: 50,
-    backgroundColor: 'black',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
+  },
+  topDesc: {
+    width: 100,
+    height: 35,
+    borderColor: '#f74658',
+    borderTopWidth: 3,
+    borderLeftWidth: 3,
+    borderRightWidth: 3,
+    borderTopLeftRadius: 100,
+    borderTopRightRadius: 100
+  },
+  desc: {
+    width: '80%',
+    padding: 20,
+    fontSize: 20,
+    textAlign: 'center',
+    fontWeight: 'bold'
+  },
+  bottomDesc: {
+    width: 100,
+    height: 35,
+    borderColor: '#6053bb',
+    borderBottomWidth: 3,
+    borderLeftWidth: 3,
+    borderRightWidth: 3,
+    borderBottomLeftRadius: 100,
+    borderBottomRightRadius: 100
+  },
+  primarybtn: {
+    width: 150,
+    height: 50,
+    margin: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10
+  },
+  font: {
+    color: '#eff2f6',
+    fontSize: 15,
+    fontWeight: 'bold'
   }
 })
 
