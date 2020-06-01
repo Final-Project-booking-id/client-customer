@@ -4,9 +4,15 @@ import Constant from 'expo-constants'
 import { useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { ScrollView } from 'react-native-gesture-handler'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 
-function merchantPage() {
+function merchantPage({ navigation: { goBack } }) {
   const navigation = useNavigation()
+
+  function goToHome() {
+    navigation.navigate('Home')
+  }
 
   function goToMap() {
     navigation.navigate('Map')
@@ -18,18 +24,37 @@ function merchantPage() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={{
-          color: '#eff2f6',
-          fontSize: 25,
-          fontWeight: '500'
-        }}>Our
+      <View style={{ backgroundColor: '#3d4558'}}>
+        <View style={styles.header}>
+          <TouchableOpacity
+            onPress={goToHome}
+            style={{
+              height: 40,
+              justifyContent: 'center',
+              marginRight: 20
+            }}
+          >
+            <Text>
+              <FontAwesomeIcon
+                style={{ color: '#f74658' }}
+                icon={faChevronLeft}
+              />
+            </Text>
+          </TouchableOpacity>
           <Text style={{
-            fontWeight: 'bold'
-          }}> Merchant</Text>
-        </Text>
+            height: 40,
+            color: '#3d4558',
+            fontSize: 30,
+            fontWeight: '500',
+            alignItems: 'center'
+          }}>Our
+          <Text style={{
+              fontWeight: 'bold'
+            }}> Merchants</Text>
+          </Text>
+        </View>
       </View>
-      <ScrollView>
+      <ScrollView style={styles.main}>
         {/* Ini nanti tinggal di map berdasarkan jumlah merchat */}
         <View style={styles.card}>
           <Text style={styles.title}>Car Wash 999</Text>
@@ -191,17 +216,24 @@ function merchantPage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#3d4558',
     paddingTop: Constant.statusBarHeight,
-    padding: 15,
-    fontFamily: 'monospace'
+    backgroundColor: '#ffffff'
+
   },
   header: {
     width: '100%',
-    height: 100,
-    paddingLeft: 10,
-    paddingBottom: 10,
-    justifyContent: 'flex-end'
+    height: 160,
+    paddingLeft: 20,
+    paddingBottom: 15,
+    borderBottomLeftRadius: 25,
+    borderBottomRightRadius: 25,
+    justifyContent: 'space-between',
+    backgroundColor: '#ffffff',
+  },
+  main: {
+    paddingTop: 20,
+    padding: 20,
+    backgroundColor: '#3d4558'
   },
   card: {
     width: '100%',
@@ -210,7 +242,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderWidth: 1,
     borderColor: '#30384d',
-    borderRadius: 5,
+    borderRadius: 10,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -227,7 +259,7 @@ const styles = StyleSheet.create({
     margin: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 5
+    borderRadius: 10
   },
   secondarybtn: {
     width: 78,
@@ -235,14 +267,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#30384d',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 5
+    borderRadius: 10
   },
   borderbtn: {
     height: 50,
     width: 80,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 5,
+    borderRadius: 10,
     margin: 5,
     marginRight: 0
   },

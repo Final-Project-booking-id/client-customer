@@ -7,6 +7,7 @@ import Home from './src/home'
 import MerchantPage from './src/merchant-page'
 import MapPage from './src/map-page'
 import ServicePage from './src/service-page'
+import DetailPage from './src/detail-page'
 
 const Stack = createStackNavigator()
 
@@ -28,6 +29,11 @@ export default function App() {
           <Stack.Screen
             name='Service'
             component={ServicePage}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='Detail'
+            component={DetailPage}
             options={{ headerShown: false }}
           />
           <Stack.Screen
