@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getQueues } from '../store/actions'
 import CarImage from '../CarImage'
 
-function Home() {
+function home() {
   const dispatch = useDispatch()
   const queues = useSelector(state => state.queues)
 
@@ -65,4 +65,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Home
+export default home
