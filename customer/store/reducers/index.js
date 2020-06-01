@@ -1,13 +1,14 @@
 const initialState = {
-  queues: []
+  queues: [],
+  destination: "-6.205260,107.008201"
 }
 
-import * as types from '../actions'
+import {SET_QUEUES}  from '../actions'
 
 export default function reducer(state = initialState, action) {
   const { type, payload } = action
   switch (type) {
-    case types.SET_QUEUES:
+    case SET_QUEUES:
       return { ...state, queues: payload }
 
     default:

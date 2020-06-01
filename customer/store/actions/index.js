@@ -1,11 +1,19 @@
 import axios from 'axios'
 
 export const SET_QUEUES = 'SET_QUEUES'
+export const SET_DESTINATION = 'SET_DESTINATION'
 
 export const setQueues = (data) => {
   return {
     type: SET_QUEUES,
     payload: data
+  }
+}
+
+export const setDestination = (coordinate)=>{
+  return {
+    type: SET_DESTINATION,
+    payload: coordinate
   }
 }
 

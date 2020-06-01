@@ -21,7 +21,7 @@ function Home() {
         <Text style={styles.font}>Queue On Progress: 20</Text>
       </View>
 
-      <View>
+      <View style={styles.image}>
         <CarImage />
       </View>
 
