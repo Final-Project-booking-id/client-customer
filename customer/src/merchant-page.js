@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import Constant from 'expo-constants'
 import { useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
+import { ScrollView } from 'react-native-gesture-handler'
 
 function merchantPage() {
   const navigation = useNavigation()
@@ -28,160 +29,161 @@ function merchantPage() {
           }}> Merchant</Text>
         </Text>
       </View>
-      {/* Ini nanti tinggal di map berdasarkan jumlah merchat */}
-      <View style={styles.card}>
-        <Text style={styles.title}>Car Wash 999</Text>
-        <View style={styles.option}>
-          <TouchableOpacity
-            onPress={goToService}
-          >
-            <LinearGradient
-              colors={['#f86674', '#f9af8b']}
-              style={styles.primarybtn}
-              start={{ x: 0.1, y: 0.1 }}
-              end={{ x: 1.0, y: 0.1 }}
+      <ScrollView>
+        {/* Ini nanti tinggal di map berdasarkan jumlah merchat */}
+        <View style={styles.card}>
+          <Text style={styles.title}>Car Wash 999</Text>
+          <View style={styles.option}>
+            <TouchableOpacity
+              onPress={goToService}
             >
-              <Text style={styles.font}>Services</Text>
-            </LinearGradient>
-          </TouchableOpacity>
+              <LinearGradient
+                colors={['#f86674', '#f9af8b']}
+                style={styles.primarybtn}
+                start={{ x: 0.1, y: 0.1 }}
+                end={{ x: 1.0, y: 0.1 }}
+              >
+                <Text style={styles.font}>Services</Text>
+              </LinearGradient>
+            </TouchableOpacity>
 
-          <LinearGradient
-            colors={['#f86674', '#f9af8b']}
-            style={styles.borderbtn}
-            start={{ x: 0.1, y: 0.1 }}
-            end={{ x: 1.0, y: 0.1 }}
-          >
-            <TouchableOpacity
-              style={styles.secondarybtn}
-              onPress={goToMap}
-            >
-              <Text style={styles.font}>Direction</Text>
-            </TouchableOpacity>
-          </LinearGradient>
-        </View>
-      </View>
-      {/*  sampai sini */}
-      <View style={styles.card}>
-        <Text style={styles.title}>Lutv Carwash</Text>
-        <View style={styles.option}>
-        <TouchableOpacity
-            onPress={goToService}
-          >
             <LinearGradient
               colors={['#f86674', '#f9af8b']}
-              style={styles.primarybtn}
+              style={styles.borderbtn}
               start={{ x: 0.1, y: 0.1 }}
               end={{ x: 1.0, y: 0.1 }}
             >
-              <Text style={styles.font}>Services</Text>
+              <TouchableOpacity
+                style={styles.secondarybtn}
+                onPress={goToMap}
+              >
+                <Text style={styles.font}>Direction</Text>
+              </TouchableOpacity>
             </LinearGradient>
-          </TouchableOpacity>
-          <LinearGradient
-            colors={['#f86674', '#f9af8b']}
-            style={styles.borderbtn}
-            start={{ x: 0.1, y: 0.1 }}
-            end={{ x: 1.0, y: 0.1 }}
-          >
-            <TouchableOpacity
-              style={styles.secondarybtn}
-              onPress={goToMap}
-            >
-              <Text style={styles.font}>Direction</Text>
-            </TouchableOpacity>
-          </LinearGradient>
+          </View>
         </View>
-      </View>
-      <View style={styles.card}>
-        <Text style={styles.title}>Steam Motor Depan BSI</Text>
-        <View style={styles.option}>
-        <TouchableOpacity
-            onPress={goToService}
-          >
+        {/*  sampai sini */}
+        <View style={styles.card}>
+          <Text style={styles.title}>Lutv Carwash</Text>
+          <View style={styles.option}>
+            <TouchableOpacity
+              onPress={goToService}
+            >
+              <LinearGradient
+                colors={['#f86674', '#f9af8b']}
+                style={styles.primarybtn}
+                start={{ x: 0.1, y: 0.1 }}
+                end={{ x: 1.0, y: 0.1 }}
+              >
+                <Text style={styles.font}>Services</Text>
+              </LinearGradient>
+            </TouchableOpacity>
             <LinearGradient
               colors={['#f86674', '#f9af8b']}
-              style={styles.primarybtn}
+              style={styles.borderbtn}
               start={{ x: 0.1, y: 0.1 }}
               end={{ x: 1.0, y: 0.1 }}
             >
-              <Text style={styles.font}>Services</Text>
+              <TouchableOpacity
+                style={styles.secondarybtn}
+                onPress={goToMap}
+              >
+                <Text style={styles.font}>Direction</Text>
+              </TouchableOpacity>
             </LinearGradient>
-          </TouchableOpacity>
-          <LinearGradient
-            colors={['#f86674', '#f9af8b']}
-            style={styles.borderbtn}
-            start={{ x: 0.1, y: 0.1 }}
-            end={{ x: 1.0, y: 0.1 }}
-          >
-            <TouchableOpacity
-              style={styles.secondarybtn}
-              onPress={goToMap}
-            >
-              <Text style={styles.font}>Direction</Text>
-            </TouchableOpacity>
-          </LinearGradient>
+          </View>
         </View>
-      </View>
-      <View style={styles.card}>
-        <Text style={styles.title}>Duta Motor</Text>
-        <View style={styles.option}>
-        <TouchableOpacity
-            onPress={goToService}
-          >
+        <View style={styles.card}>
+          <Text style={styles.title}>Steam Motor Depan BSI</Text>
+          <View style={styles.option}>
+            <TouchableOpacity
+              onPress={goToService}
+            >
+              <LinearGradient
+                colors={['#f86674', '#f9af8b']}
+                style={styles.primarybtn}
+                start={{ x: 0.1, y: 0.1 }}
+                end={{ x: 1.0, y: 0.1 }}
+              >
+                <Text style={styles.font}>Services</Text>
+              </LinearGradient>
+            </TouchableOpacity>
             <LinearGradient
               colors={['#f86674', '#f9af8b']}
-              style={styles.primarybtn}
+              style={styles.borderbtn}
               start={{ x: 0.1, y: 0.1 }}
               end={{ x: 1.0, y: 0.1 }}
             >
-              <Text style={styles.font}>Services</Text>
+              <TouchableOpacity
+                style={styles.secondarybtn}
+                onPress={goToMap}
+              >
+                <Text style={styles.font}>Direction</Text>
+              </TouchableOpacity>
             </LinearGradient>
-          </TouchableOpacity>
-          <LinearGradient
-            colors={['#f86674', '#f9af8b']}
-            style={styles.borderbtn}
-            start={{ x: 0.1, y: 0.1 }}
-            end={{ x: 1.0, y: 0.1 }}
-          >
-            <TouchableOpacity
-              style={styles.secondarybtn}
-              onPress={goToMap}
-            >
-              <Text style={styles.font}>Direction</Text>
-            </TouchableOpacity>
-          </LinearGradient>
+          </View>
         </View>
-      </View>
-      <View style={styles.card}>
-        <Text style={styles.title}>Keppo Steam</Text>
-        <View style={styles.option}>
-        <TouchableOpacity
-            onPress={goToService}
-          >
+        <View style={styles.card}>
+          <Text style={styles.title}>Duta Motor</Text>
+          <View style={styles.option}>
+            <TouchableOpacity
+              onPress={goToService}
+            >
+              <LinearGradient
+                colors={['#f86674', '#f9af8b']}
+                style={styles.primarybtn}
+                start={{ x: 0.1, y: 0.1 }}
+                end={{ x: 1.0, y: 0.1 }}
+              >
+                <Text style={styles.font}>Services</Text>
+              </LinearGradient>
+            </TouchableOpacity>
             <LinearGradient
               colors={['#f86674', '#f9af8b']}
-              style={styles.primarybtn}
+              style={styles.borderbtn}
               start={{ x: 0.1, y: 0.1 }}
               end={{ x: 1.0, y: 0.1 }}
             >
-              <Text style={styles.font}>Services</Text>
+              <TouchableOpacity
+                style={styles.secondarybtn}
+                onPress={goToMap}
+              >
+                <Text style={styles.font}>Direction</Text>
+              </TouchableOpacity>
             </LinearGradient>
-          </TouchableOpacity>
-          <LinearGradient
-            colors={['#f86674', '#f9af8b']}
-            style={styles.borderbtn}
-            start={{ x: 0.1, y: 0.1 }}
-            end={{ x: 1.0, y: 0.1 }}
-          >
-            <TouchableOpacity
-              style={styles.secondarybtn}
-              onPress={goToMap}
-            >
-              <Text style={styles.font}>Direction</Text>
-            </TouchableOpacity>
-          </LinearGradient>
+          </View>
         </View>
-      </View>
-
+        <View style={styles.card}>
+          <Text style={styles.title}>Keppo Steam</Text>
+          <View style={styles.option}>
+            <TouchableOpacity
+              onPress={goToService}
+            >
+              <LinearGradient
+                colors={['#f86674', '#f9af8b']}
+                style={styles.primarybtn}
+                start={{ x: 0.1, y: 0.1 }}
+                end={{ x: 1.0, y: 0.1 }}
+              >
+                <Text style={styles.font}>Services</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+            <LinearGradient
+              colors={['#f86674', '#f9af8b']}
+              style={styles.borderbtn}
+              start={{ x: 0.1, y: 0.1 }}
+              end={{ x: 1.0, y: 0.1 }}
+            >
+              <TouchableOpacity
+                style={styles.secondarybtn}
+                onPress={goToMap}
+              >
+                <Text style={styles.font}>Direction</Text>
+              </TouchableOpacity>
+            </LinearGradient>
+          </View>
+        </View>
+      </ScrollView>
     </View>
   )
 }

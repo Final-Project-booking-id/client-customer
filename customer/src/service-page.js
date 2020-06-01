@@ -2,12 +2,13 @@ import React, { useEffect } from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import Constant from 'expo-constants'
 import { useNavigation } from '@react-navigation/native'
+import { ScrollView } from 'react-native-gesture-handler'
 
 function servicePage() {
   const navigation = useNavigation()
 
   function goToDetail() {
-    navigation.navigate('')
+    // navigation.navigate('')
   }
 
   return (
@@ -21,14 +22,23 @@ function servicePage() {
           Car Wash 99
         </Text>
       </View>
-      {/* Ini nanti tinggal di map berdasarkan jumlah merchat */}
-      <TouchableOpacity
-        style={styles.card}
-        onPress={goToDetail}
-      >
-        
-      </TouchableOpacity>
-      {/*  sampai sini */}
+      <ScrollView style={styles.main}>
+        {/* Ini nanti tinggal di map berdasarkan jumlah merchat */}
+        <TouchableOpacity
+          style={styles.card}
+          onPress={goToDetail}
+        >
+          <View style={styles.cardHeader}>
+            <View></View>
+            <View></View>
+          </View>
+          <View style={styles.cardMain}>
+
+          </View>
+        </TouchableOpacity>
+        {/*  sampai sini */}
+      </ScrollView>
+
     </View>
   )
 }
@@ -48,8 +58,27 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     justifyContent: 'flex-end'
   },
+  main: {
+    marginTop: 20
+  },
   card: {
-
+    width: '100%',
+    height: 200,
+    marginBottom: 10
+  },
+  cardHeader: {
+    width: '100%',
+    height: 60,
+    backgroundColor: '#636a7d',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10
+  },
+  cardMain: {
+    width: '100%',
+    height: 140,
+    backgroundColor: '#e8e9ee',
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10
   }
 })
 
