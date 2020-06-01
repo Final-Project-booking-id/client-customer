@@ -8,6 +8,7 @@ import MerchantPage from './src/merchant-page'
 import MapPage from './src/map-page'
 import ServicePage from './src/service-page'
 import DetailPage from './src/detail-page'
+import BookingPage from './src/booking-page'
 
 const Stack = createStackNavigator()
 
@@ -16,6 +17,16 @@ export default function App() {
     <Provider store={store} >
       <NavigationContainer>
         <Stack.Navigator>
+          <Stack.Screen
+            name='Home'
+            component={Home}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='Book'
+            component={BookingPage}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen
             name='Merchant'
             component={MerchantPage}
@@ -34,11 +45,6 @@ export default function App() {
           <Stack.Screen
             name='Detail'
             component={DetailPage}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='Home'
-            component={Home}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

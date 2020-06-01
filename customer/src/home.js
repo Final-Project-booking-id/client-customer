@@ -4,10 +4,20 @@ import Constant from 'expo-constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { getQueues } from '../store/actions'
 import CarImage from '../CarImage'
+import { useNavigation } from '@react-navigation/native'
 
 function home() {
+  const navigation = useNavigation()
   const dispatch = useDispatch()
   const queues = useSelector(state => state.queues)
+
+  function goToMerchant() {
+    navigation.navigate('Merchant')
+  }
+
+  function goToBooking() {
+    navigation.navigate('Book')
+  }
 
   // useEffect(() => {
   //   dispatch(getQueues())
@@ -26,12 +36,20 @@ function home() {
       </View>
 
       <View style={styles.option}>
-        <TouchableOpacity>
-          <Text style={styles.font}>Choose Car Wash</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={styles.font}>My Booked</Text>
-        </TouchableOpacity>
+        <View style={styles.wraper}>
+          <TouchableOpacity
+            style={styles.merchant}
+            onPress={goToMerchant}
+          >
+            <Text style={styles.optionFont}>Choose Merchant</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.booking}
+            onPress={goToBooking}
+          >
+            <Text style={styles.optionFont}>My Booked</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   )
@@ -43,25 +61,50 @@ const styles = StyleSheet.create({
     backgroundColor: '#3d4558',
     paddingTop: Constant.statusBarHeight,
     padding: 20,
+    justifyContent: 'space-between'
   },
-  font: {
-    color: '#eff2f6'
+  main: {
+    height: '25%',
+    justifyContent: 'flex-end'
   },
   title: {
     color: '#eff2f6',
     fontSize: 50,
     fontWeight: '700'
   },
-  main: {
-    paddingTop: 50
+  font: {
+    color: '#eff2f6'
   },
   image: {
-
+    height: '60%'
   },
   option: {
-    display: "flex",
+    height: '10%'
+  },
+  wraper: {
+    height: 60,    
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    backgroundColor: '#63687a',
+    borderRadius: 50
+  },
+  merchant: {
+    width: '55%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 50,
+    backgroundColor: '#30384d',
+  },
+  booking: {
+    width: '45%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  optionFont: {
+    fontSize: 17,
+    color: '#eff2f6'
   }
 })
 
