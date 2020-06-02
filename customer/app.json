@@ -21,22 +21,6 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "intentFilters": [
-      {
-        "action": "VIEW",
-        "data": [
-          {
-            "scheme": "http",
-            "host": "*.myapp.io",
-            "pathPrefix": "/records"
-          }
-        ],
-        "category": [
-          "BROWSABLE",
-          "DEFAULT"
-        ]
-      }
-    ],
     "ios": {
       "supportsTablet": true
     }

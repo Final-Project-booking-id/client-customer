@@ -9,6 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import servicePage from './service-page'
 import { useSelector, useDispatch } from 'react-redux'
 import { bookQueue, readTokenQueue } from '../store/actions'
+import QRCode from 'react-native-qrcode-svg'
 
 
 function detailPage({ navigation: { goBack }, route }) {
@@ -19,9 +20,14 @@ function detailPage({ navigation: { goBack }, route }) {
     navigation.navigate('Map', { destination: address })
   }
   const CustomerId = useSelector(state => state.CustomerId)
+  const token = useSelector(state => state.token)
+  console.log(token, "<<<<<")
   function Book() {
     dispatch(bookQueue(CustomerId, service.id))
-    navigation.navigate('Merchant')
+    // navigation.navigate('Merchant')
+    // return (
+
+    // )
   }
   return (
     <View style={styles.container}>
@@ -100,9 +106,15 @@ function detailPage({ navigation: { goBack }, route }) {
           {/* Desc */}
           <View style={{ width: '100%', alignItems: 'center' }}>
             <View style={styles.topDesc}></View>
-            <Text style={styles.desc}>
-              {service.description}
-            </Text>
+            {
+              !token ? (<Text style={styles.desc}>
+                {service.description}
+              </Text>) : (<QRCode
+                value={token}
+                size={250}
+              />)
+            }
+
             <View style={styles.bottomDesc}></View>
           </View>
 

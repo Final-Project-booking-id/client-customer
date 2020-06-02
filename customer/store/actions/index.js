@@ -9,6 +9,14 @@ export const SET_CUSTOMER = 'SET_CUSTOMER'
 export const SET_TOKEN = 'SET_TOKEN'
 export const SET_SERVICE_ID_PENDING = 'SET_SERVICE_PENDING'
 export const SET_QUEUE_ID = 'SET_QUEUE_ID'
+export const SET_IS_UPDATE = 'SET_IS_UPDATE'
+
+export const setIsUpdate = (status) => {
+  return {
+    type: SET_IS_UPDATE,
+    payload: status
+  }
+}
 
 export const setQueueId = (id) => {
   return {

@@ -8,7 +8,8 @@ const initialState = {
   myCoordinate: '',
   token: '',
   ServiceId: '',
-  QueueId: ''
+  QueueId: '',
+  isUpdate: false
 }
 
 
