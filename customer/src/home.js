@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import io from 'socket.io-client'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import Constant from 'expo-constants'
@@ -10,13 +10,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faRedoAlt } from '@fortawesome/free-solid-svg-icons'
 
 const ENDPOINT = 'http://localhost:3000'
-
 function home() {
+  console.disableYellowBox = true
   const navigation = useNavigation()
+  const CustomerId = useSelector(state => state.CustomerId)
   const dispatch = useDispatch()
   const queues = useSelector(state => state.queues)
   const isUpdate = useSelector(state => state.isUpdate)
+  // console.log(isUpdate)
+  useEffect(() => {
+    dispatch(getQueuesByServiceId(ServiceId))
+  }, [dispatch])
   const ServiceId = useSelector(state => state.ServiceId)
+
+  const refetchQueues = useCallback(() => {
+    dispatch(getQueuesByServiceId(ServiceId))
+  }, [dispatch])
 
   function goToMerchant() {
     navigation.navigate('Merchant')
@@ -27,39 +36,50 @@ function home() {
       <FontAwesomeIcon
         style={{ color: '#ffd26a' }}
         icon={faRedoAlt}
-        onPress={() => dispatch(getQueuesByServiceId(ServiceId))}
+        onPress={refetchQueues}
       />
+      <Text style={{ fontSize: 10 }}>THERE IS AN UPDATED QUEUE</Text>
     </TouchableOpacity>)
   }
+
+  useEffect(() => {
+    refetchQueues()
+  }, [refetchQueues])
 
   function goToBooking() {
     navigation.navigate('Book')
   }
+  // console.log(queues)
+  let numberQueue = 1
+  if (queues.length) {
+    queues.map((queue, el) => {
+      if (queue.CustomerId === CustomerId) numberQueue += +el
+    })
+  }
+  console.log("====", numberQueue, 'ANTRIAN LU')
 
-  const socket = io(ENDPOINT)
-  useEffect(() => {
-    dispatch(getQueuesByServiceId(ServiceId))
-  }, [dispatch])
   useEffect(() => {
     // socket.emit("Client", (data) => {
     // })
+    socket = io(ENDPOINT)
     socket.on("Server", data => {
+      // console.log("==========", data, "==============")
       if (data.toLowerCase() === 'updated') {
         dispatch(setIsUpdate(true))
       }
     })
 
-  }, [ENDPOINT, dispatch])
-  console.log(queues)
+  }, [ENDPOINT, dispatch, setIsUpdate])
+  // console.log(queues)
 
   return (
     <View style={styles.container}>
       <View style={styles.main}>
         <Text style={[styles.font, styles.title]}>Washry</Text>
         <View style={{ flexDirection: 'row' }}>
-          <Text style={[styles.font, { marginRight: 10 }]}>You are in the 20 queue</Text>
+          <Text style={[styles.font, { marginRight: 10 }]}>You are in the {numberQueue} queue</Text>
           {
-            !isUpdate ? <UpdateButton /> : <></>
+            isUpdate ? <UpdateButton /> : <></>
           }
         </View>
       </View>

@@ -26,9 +26,10 @@ function detailPage({ navigation: { goBack }, route }) {
   // console.log(token, "<<<<<")
   function Book() {
     dispatch(bookQueue(CustomerId, service.id))
-    if (successBook) {
-      return navigation.navigate('Book', { name })
-    }
+    navigation.navigate('Book', { name })
+    // if (successBook) {
+    //   return
+    // }
     // return (
 
     // )

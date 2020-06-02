@@ -9,7 +9,8 @@ import QRCode from 'react-native-qrcode-svg'
 import { useSelector } from 'react-redux'
 
 function detailPage({ navigation: { goBack }, route }) {
-  const { name } = route.params
+  // const { name } = route.params
+  const merchantName = useSelector(state => state.merchantName)
   const navigation = useNavigation()
   function goToHome() {
     navigation.navigate('Home')
@@ -50,7 +51,7 @@ function detailPage({ navigation: { goBack }, route }) {
       <View style={styles.info}>
         <View style={styles.sectionOne}>
           <Text style={styles.title}>
-            {name}
+            {merchantName}
           </Text>
         </View>
         <View style={styles.sectionTwo}>
@@ -60,10 +61,11 @@ function detailPage({ navigation: { goBack }, route }) {
       </View>
       <View style={styles.qrcode}>
         {/* SIMPEN QR CODENYA DISINI */}
-        (<QRCode
+        {token ? (<QRCode
           value={token}
           size={250}
-        />)
+        />) : <></>
+        }
       </View>
       <View style={{ alignItems: 'center' }}>
 

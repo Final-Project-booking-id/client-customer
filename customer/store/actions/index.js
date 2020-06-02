@@ -133,14 +133,16 @@ export const getServicesByMerchantId = (id) => {
 }
 
 export const fetchQueuesByServiceId = (ServiceId) => {
-  return axios.get(baseUrl + `/queue/${ServiceId}`)
+  return axios.get(baseUrl + `/queue/service/${ServiceId}`)
 }
 
 export const getQueuesByServiceId = (ServiceId) => {
   return dispatch => {
     fetchQueuesByServiceId(ServiceId)
       .then(({ data }) => {
+        // if (data) console.log('OOOOKKKK', data)
         dispatch(setQueues(data))
+        dispatch(setIsUpdate(false))
       })
       .catch(console.log)
   }

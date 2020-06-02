@@ -1,7 +1,7 @@
 import { SET_QUEUES, SET_MERCHANTS, SET_SERVICES, GET_MY_COORDINATES, SET_CUSTOMER, SET_TOKEN, SET_SERVICE_ID_PENDING, SET_QUEUE_ID, SET_IS_UPDATE, SET_MERCHANT_NAME, SET_SUCCESS_BOOK } from '../actions'
 
 const initialState = {
-  CustomerId: 8,
+  CustomerId: 1,
   queues: [],
   merchants: [],
   services: [],
