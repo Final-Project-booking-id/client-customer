@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMerchants } from '../store/actions'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity, Button, Linking } from 'react-native'
 import Constant from 'expo-constants'
 import { useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -12,6 +12,9 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 function merchantPage({ navigation: { goBack } }) {
   const navigation = useNavigation()
   const dispatch = useDispatch()
+  const QueueId = useSelector(state => state.QueueId)
+  const token = useSelector(state => state.token)
+  if (QueueId) console.log('ANTRI CUYY', QueueId, token)
 
   useEffect(() => {
     dispatch(getMerchants())
@@ -25,13 +28,17 @@ function merchantPage({ navigation: { goBack } }) {
     navigation.navigate('Map', { destination })
   }
 
-  function goToService(id) {
-    navigation.navigate('Service', { id })
+  function goToService(id, address) {
+    navigation.navigate('Service', { id, address })
   }
 
   return (
     <View style={styles.container}>
       <View style={{ backgroundColor: '#3d4558' }}>
+        {/* <Button style={{ color: 'blue' }}
+          onPress={() => Linking.openURL('https://api.qrserver.com/v1/create-qr-code/?size=350x350&data=bayu')}
+          title="Google" /> */}
+
         <View style={styles.header}>
           <TouchableOpacity
             onPress={goToHome}
@@ -65,11 +72,11 @@ function merchantPage({ navigation: { goBack } }) {
         {/* Ini nanti tinggal di map berdasarkan jumlah merchat */}
         {
           merchants.map(merchant => {
-            return (<View style={styles.card}>
+            return (<View style={styles.card} key={merchant.id}>
               <Text style={styles.title}>{merchant.name}</Text>
               <View style={styles.option}>
                 <TouchableOpacity
-                  onPress={() => goToService(merchant.id)}
+                  onPress={() => goToService(merchant.id, merchant.address)}
                 >
                   <LinearGradient
                     colors={['#f86674', '#f9af8b']}

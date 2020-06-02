@@ -5,16 +5,23 @@ import { useNavigation } from '@react-navigation/native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import { getServicesByMerchantId } from '../store/actions'
+import { useSelector, useDispatch } from 'react-redux'
 
-function servicePage({ navigation: { goBack } }) {
+function servicePage({ navigation: { goBack }, route }) {
+  const dispatch = useDispatch()
+  const { id, address } = route.params
+  useEffect(() => {
+    dispatch(getServicesByMerchantId(id))
+  }, [])
   const navigation = useNavigation()
 
   const premiumDesc = 'Premium Auto Detailing hadir dengan Premium Car Wash, Interior Vacuum, Engine Cleaning, Wax Protection, Tire Polish, Water Spot dan didukung oleh pegawai yang berpengalaman dibidangnya'
 
   const desc = 'Premium Auto Detailing hadir dengan Premium Car Wash, Interior Vacuum, Tire Polish dan didukung oleh pegawai yang berpengalaman dibidangnya'
-
-  function goToDetail() {
-    navigation.navigate('Detail')
+  const services = useSelector(state => state.services)
+  function goToDetail(service) {
+    navigation.navigate('Detail', { address, service })
   }
 
   return (
@@ -49,43 +56,32 @@ function servicePage({ navigation: { goBack } }) {
       </View>
       <ScrollView style={styles.main}>
         {/* Ini nanti tinggal di map berdasarkan jumlah merchat */}
-        <TouchableOpacity
-          style={styles.card}
-          onPress={goToDetail}
-        >
-          <View style={styles.cardHeader}>
-            <View style={styles.headerContent}>
-              <Text style={styles.title}>Premium Car Wash</Text>
-            </View>
-            <View style={styles.headerContent}>
-              <Text style={styles.price}>Rp. 150000</Text>
-            </View>
-          </View>
-          <View style={styles.cardMain}>
-            <Text style={styles.desc}>
-              {`${premiumDesc.substring(0, 80)}...`}
-            </Text>
-          </View>
-        </TouchableOpacity>
+        {
+          services.map(service => {
+            return (
+              <TouchableOpacity
+                style={styles.card}
+                onPress={() => goToDetail(service)}
+              >
+                <View style={styles.cardHeader}>
+                  <View style={styles.headerContent}>
+                    <Text style={styles.title}>{service.name}</Text>
+                  </View>
+                  <View style={styles.headerContent}>
+                    <Text style={styles.price}>Rp. {service.price}</Text>
+                  </View>
+                </View>
+                <View style={styles.cardMain}>
+                  <Text style={styles.desc}>
+                    {`${premiumDesc.substring(0, 80)}...`}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )
+          })
+        }
+
         {/*  sampai sini */}
-        <TouchableOpacity
-          style={styles.card}
-          onPress={goToDetail}
-        >
-          <View style={styles.cardHeader}>
-            <View style={styles.headerContent}>
-              <Text style={styles.title}>Car Wash</Text>
-            </View>
-            <View style={styles.headerContent}>
-              <Text style={styles.price}>Rp. 750000</Text>
-            </View>
-          </View>
-          <View style={styles.cardMain}>
-            <Text style={styles.desc}>
-              {`${desc.substring(0, 80)}...`}
-            </Text>
-          </View>
-        </TouchableOpacity>
       </ScrollView>
 
     </View>

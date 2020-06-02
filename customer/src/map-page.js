@@ -13,12 +13,12 @@ let currentLocation = []
 function success(pos) {
   let crd = pos.coords;
 
-  currentLocation.push(crd.longitude)
   currentLocation.push(crd.latitude)
-  console.log('Your current position is:');
-  console.log(`Latitude : ${crd.latitude}`);
-  console.log(`Longitude: ${crd.longitude}`);
-  console.log(`More or less ${crd.accuracy} meters.`);
+  currentLocation.push(crd.longitude)
+  // console.log('Your current position is:');
+  // console.log(`Latitude : ${crd.latitude}`);
+  // console.log(`Longitude: ${crd.longitude}`);
+  // console.log(`More or less ${crd.accuracy} meters.`);
 }
 
 function error(err) {
@@ -29,7 +29,8 @@ export default function MapPage({ route }) {
   // const dispatch = useDispatch()
 
   const { destination } = route.params
-  // console.log('ini', destination)
+  // console.log(destination, 'DES MASUKKKKK')
+  // console.log('ini', currentLocation)
   return (
     <>
       <View style={styles.container}>
@@ -38,8 +39,8 @@ export default function MapPage({ route }) {
           initialRegion={{
             latitude: +currentLocation[0],
             longitude: +currentLocation[1],
-            latitudeDelta: 0.2,
-            longitudeDelta: 0.2,
+            latitudeDelta: 0.07,
+            longitudeDelta: 0.07,
           }}
           zoomControlEnabled={true}
         >
@@ -47,8 +48,13 @@ export default function MapPage({ route }) {
             <Image source={require('../assets/pinme.png')} style={{ height: 40, width: 40, resizeMode: 'contain', zIndex: 9999 }} />
           </MapView.Marker>
 
+          <MapView.Marker coordinate={{ latitude: +destination.split(",")[0], longitude: +destination.split(",")[1] }} title={'Destination'}>
+            {/* <Image source={require('../assets/pinme.png')} style={{ height: 40, width: 40, resizeMode: 'contain', zIndex: 9999 }} /> */}
+          </MapView.Marker>
+
+
           <MapViewDirections
-            origin={{ latitude: +currentLocation, longitude: +currentLocation[1] }}
+            origin={{ latitude: +currentLocation[0], longitude: +currentLocation[1] }}
             destination={{ latitude: +destination.split(",")[0], longitude: +destination.split(",")[1] }}
             apikey={'AIzaSyBfRZ4teg55GyBfA7mtR-NlIDugDXYELSc'}
             strokeWidth={4}

@@ -6,15 +6,29 @@ import { faChevronLeft, faLocationArrow } from '@fortawesome/free-solid-svg-icon
 import { useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { ScrollView } from 'react-native-gesture-handler'
+import servicePage from './service-page'
+import { useSelector, useDispatch } from 'react-redux'
+import { bookQueue, readTokenQueue } from '../store/actions'
+import QRCode from 'react-native-qrcode-svg'
 
 
-function detailPage({ navigation: { goBack } }) {
+function detailPage({ navigation: { goBack }, route }) {
+  const dispatch = useDispatch()
   const navigation = useNavigation()
-
+  const { address, service } = route.params
   function goToMap() {
-    navigation.navigate('Map')
+    navigation.navigate('Map', { destination: address })
   }
+  const CustomerId = useSelector(state => state.CustomerId)
+  const token = useSelector(state => state.token)
+  console.log(token, "<<<<<")
+  function Book() {
+    dispatch(bookQueue(CustomerId, service.id))
+    // navigation.navigate('Merchant')
+    // return (
 
+    // )
+  }
   return (
     <View style={styles.container}>
       <View style={{
@@ -67,7 +81,7 @@ function detailPage({ navigation: { goBack } }) {
                 color: '#c6c6c6'
               }}
             >
-              Rp. 150000
+              Rp. {service.price}
             </Text>
             <Text
               style={{
@@ -76,7 +90,7 @@ function detailPage({ navigation: { goBack } }) {
                 color: '#2a2a2a'
               }}
             >
-              Premium Car Wash
+              {service.name}
             </Text>
             <Text
               style={{
@@ -85,23 +99,29 @@ function detailPage({ navigation: { goBack } }) {
                 color: '#4c4c4c'
               }}
             >
-              60 minute
+              {service.estimation_time}
             </Text>
           </View>
 
           {/* Desc */}
           <View style={{ width: '100%', alignItems: 'center' }}>
             <View style={styles.topDesc}></View>
-            <Text style={styles.desc}>
-              Premium Auto Detailing hadir dengan Premium Car Wash, Interior Vacuum, Engine Cleaning, Wax Protection, Tire Polish, Water Spot dan didukung oleh pegawai yang berpengalaman dibidangnya
-            </Text>
+            {
+              !token ? (<Text style={styles.desc}>
+                {service.description}
+              </Text>) : (<QRCode
+                value={token}
+                size={250}
+              />)
+            }
+
             <View style={styles.bottomDesc}></View>
           </View>
 
           {/* Button */}
           <View style={{ alignItems: 'center' }}>
             <TouchableOpacity
-            // onPress={}
+              onPress={() => Book()}
             >
               <LinearGradient
                 colors={['#f86674', '#f9af8b']}
