@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getQueues } from '../store/actions'
 import CarImage from '../CarImage'
 import { useNavigation } from '@react-navigation/native'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faRedoAlt } from '@fortawesome/free-solid-svg-icons'
 
 function home() {
   const navigation = useNavigation()
@@ -27,8 +29,16 @@ function home() {
   return (
     <View style={styles.container}>
       <View style={styles.main}>
-        <Text style={styles.font, styles.title}>Washry</Text>
-        <Text style={styles.font}>Queue On Progress: 20</Text>
+        <Text style={[styles.font, styles.title]}>Washry</Text>
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={[styles.font, { marginRight: 10 }]}>You are in the 20 queue</Text>
+          <TouchableOpacity>
+            <FontAwesomeIcon
+              style={{ color: '#ffd26a' }}
+              icon={faRedoAlt}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
 
       <View style={styles.image}>
@@ -69,20 +79,21 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#eff2f6',
-    fontSize: 50,
+    fontSize: 75,
     fontWeight: '700'
   },
   font: {
     color: '#eff2f6'
   },
   image: {
+    alignItems: 'center',
     height: '60%'
   },
   option: {
     height: '10%'
   },
   wraper: {
-    height: 60,    
+    height: 60,
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: '#63687a',

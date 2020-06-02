@@ -175,8 +175,7 @@ const styles = StyleSheet.create({
     width: '80%',
     padding: 20,
     fontSize: 20,
-    textAlign: 'center',
-    fontWeight: 'bold'
+    textAlign: 'center'
   },
   bottomDesc: {
     width: 100,
