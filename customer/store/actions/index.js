@@ -12,7 +12,14 @@ export const SET_QUEUE_ID = 'SET_QUEUE_ID'
 export const SET_IS_UPDATE = 'SET_IS_UPDATE'
 export const SET_MERCHANT_NAME = 'SET_MERCHANT_NAME'
 export const SET_SUCCESS_BOOK = 'SUCCESS'
+export const SET_QUEUE_RANK = 'SET_QUEUE_RANK'
 
+export const setQueueRank = (number) => {
+  return {
+    type: SET_QUEUE_RANK,
+    payload: number
+  }
+}
 
 export const setSuccessBook = (status) => {
   return {
@@ -160,19 +167,88 @@ export const postQueue = (CustomerId, ServiceId) => {
 
 export const bookQueue = (CustomerId, ServiceId) => {
   return dispatch => {
-    postQueue(CustomerId, ServiceId)
-      .then(({ data }) => {
-        dispatch(setQueueId(data.id))
-        dispatch(setSuccessBook(true))
-        return readTokenQueue(data.id)
-      })
-      .then(({ data }) => {
-        dispatch(setToken(data.token))
-      })
-      .catch(err => {
-        setSuccessBook(false)
-      })
+    return new Promise((resolve, reject) => {
+      postQueue(CustomerId, ServiceId)
+        .then(({ data }) => {
+          dispatch(setQueueId(data.id))
+          dispatch(setSuccessBook(true))
+          return readTokenQueue(data.id)
+        })
+        .then(({ data }) => {
+          dispatch(setToken(data.token))
+          return resolve()
+        })
+        .catch(err => {
+          // alert(err)
+          setSuccessBook(false)
+          return reject(err)
+        })
+    })
   }
+}
+
+export const dummyLogin = (num) => {
+  return ((dispatch) => {
+    if (num === "A 111 AB") {
+      dispatch(setCustomer(1))
+    } else if (num === "B 222 CD") {
+      dispatch(setCustomer(2))
+    } else if (num === "C 333 EF") {
+      dispatch(setCustomer(3))
+    } else if (num === "D 444 GH") {
+      dispatch(setCustomer(4))
+    } else if (num === "E 555 IJ") {
+      dispatch(setCustomer(5))
+    } else if (num === "F 666 KL") {
+      dispatch(setCustomer(6))
+    } else if (num === "G 777 MN") {
+      dispatch(setCustomer(7))
+    } else if (num === "H 888 OP") {
+      dispatch(setCustomer(8))
+    } else if (num === "I 999 QR") {
+      dispatch(setCustomer(9))
+    }
+  })
+}
+
+export const updateStatus = (id) => {
+  return ((dispatch) => {
+    return new Promise((resolve, reject) => {
+      readTokenQueue(id)
+        .then(({ data }) => {
+          const { id,
+            CustomerId,
+            Service,
+            status,
+            book_date,
+            description } = data
+          let updateData = {
+            id,
+            CustomerId,
+            Service,
+            status: "cancel",
+            book_date,
+            description
+          }
+          return axios({
+            method: 'patch',
+            url: baseUrl + `/queue/${id}`,
+            data: updateData
+          })
+        })
+        .then(response => {
+          // alert(`Update! Order id ${response.data.id} is now ${response.data.status}`)
+          console.log(response.data)
+          dispatch(setQueueId(0))
+          return resolve()
+        })
+        .catch(err => {
+          alert(err)
+          console.log(err)
+          return resolve(err)
+        })
+    })
+  })
 }
 
 export const readTokenQueue = async (QueueId) => {

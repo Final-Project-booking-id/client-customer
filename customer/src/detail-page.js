@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native'
 import Constant from 'expo-constants'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faChevronLeft, faLocationArrow } from '@fortawesome/free-solid-svg-icons'
@@ -26,12 +26,23 @@ function detailPage({ navigation: { goBack }, route }) {
   // console.log(token, "<<<<<")
   function Book() {
     dispatch(bookQueue(CustomerId, service.id))
-    navigation.navigate('Book', { name })
+      .then(response => {
+        navigation.navigate('Book', { name })
+      })
+      .catch(err => {
+        Alert.alert(
+          "Alert",
+          "You cannot have more than one ongoing booking",
+          [
+            { text: "OK", onPress: () => navigation.navigate('Home', { name }) }
+          ],
+          { cancelable: false }
+        );
+      })
     // if (successBook) {
     //   return
     // }
     // return (
-
     // )
   }
   return (
@@ -111,14 +122,14 @@ function detailPage({ navigation: { goBack }, route }) {
           {/* Desc */}
           <View style={{ width: '100%', alignItems: 'center' }}>
             <View style={styles.topDesc}></View>
-            {
+            {/* {
               !token ? (<Text style={styles.desc}>
                 {service.description}
               </Text>) : (<QRCode
                 value={token}
                 size={250}
               />)
-            }
+            } */}
 
             <View style={styles.bottomDesc}></View>
           </View>

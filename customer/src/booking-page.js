@@ -6,14 +6,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { LinearGradient } from 'expo-linear-gradient'
 import QRCode from 'react-native-qrcode-svg'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { updateStatus } from '../store/actions/index'
 
 function detailPage({ navigation: { goBack }, route }) {
   // const { name } = route.params
+  const dispatch = useDispatch()
   const merchantName = useSelector(state => state.merchantName)
   const navigation = useNavigation()
+  const queueRank = useSelector(state => state.queueRank)
   function goToHome() {
     navigation.navigate('Home')
+  }
+  const QueueId = useSelector(state => state.QueueId)
+  alert(QueueId)
+  function cancel(QueueId) {
+    dispatch(updateStatus(QueueId))
   }
   const token = useSelector(state => state.token)
   return (
@@ -42,7 +50,7 @@ function detailPage({ navigation: { goBack }, route }) {
         >
           <TouchableOpacity
             style={styles.secondarybtn}
-            onPress={() => goToMap(merchant.address)}
+            onPress={() => { cancel(QueueId) }}
           >
             <Text style={styles.font}>Cancel Booking</Text>
           </TouchableOpacity>
@@ -55,8 +63,8 @@ function detailPage({ navigation: { goBack }, route }) {
           </Text>
         </View>
         <View style={styles.sectionTwo}>
-          <Text style={styles.queueInfo}>Your queue number: 20</Text>
-          <Text style={styles.queueInfo}>Remaining queue: 5</Text>
+          <Text style={styles.queueInfo}>Your Are #{}</Text>
+          {/* <Text style={styles.queueInfo}>Remaining queue: 5</Text> */}
         </View>
       </View>
       <View style={styles.qrcode}>

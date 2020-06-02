@@ -3,7 +3,7 @@ import io from 'socket.io-client'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import Constant from 'expo-constants'
 import { useDispatch, useSelector } from 'react-redux'
-import { getQueuesByServiceId, setIsUpdate } from '../store/actions'
+import { getQueuesByServiceId, setIsUpdate, setQueueRank } from '../store/actions'
 import CarImage from '../CarImage'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
@@ -12,11 +12,13 @@ import { faRedoAlt } from '@fortawesome/free-solid-svg-icons'
 const ENDPOINT = 'http://localhost:3000'
 function home() {
   console.disableYellowBox = true
+  const queueRank = useSelector(state => state.queueRank)
   const navigation = useNavigation()
   const CustomerId = useSelector(state => state.CustomerId)
   const dispatch = useDispatch()
   const queues = useSelector(state => state.queues)
   const isUpdate = useSelector(state => state.isUpdate)
+  const queueExist = useSelector(state => state.QueueId)
   // console.log(isUpdate)
   useEffect(() => {
     dispatch(getQueuesByServiceId(ServiceId))
@@ -50,13 +52,14 @@ function home() {
     navigation.navigate('Book')
   }
   // console.log(queues)
-  let numberQueue = 1
+  let numberQueue = 0
   if (queues.length) {
     queues.map((queue, el) => {
-      if (queue.CustomerId === CustomerId) numberQueue += +el
+      if (queue.CustomerId === CustomerId) numberQueue = +el + 1
     })
   }
-  console.log("====", numberQueue, 'ANTRIAN LU')
+  dispatch(setQueueRank(numberQueue))
+  console.log("====", queueRank, 'ANTRIAN LU')
 
   useEffect(() => {
     // socket.emit("Client", (data) => {
@@ -77,7 +80,8 @@ function home() {
       <View style={styles.main}>
         <Text style={[styles.font, styles.title]}>Washry</Text>
         <View style={{ flexDirection: 'row' }}>
-          <Text style={[styles.font, { marginRight: 10 }]}>You are in the {numberQueue} queue</Text>
+          {(queueExist === 0) ? <Text style={{ color: '#3d4558' }}>...</Text> :
+            <Text style={[styles.font, { marginRight: 10 }]}>You are in the #{numberQueue} queue</Text>}
           {
             isUpdate ? <UpdateButton /> : <></>
           }
