@@ -7,7 +7,7 @@ const initialState = {
   services: [],
   myCoordinate: '',
   token: '',
-  ServiceId: '',
+  ServiceId: 1,
   QueueId: '',
   isUpdate: false,
   statusQueue: ''
