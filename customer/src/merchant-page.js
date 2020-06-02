@@ -20,9 +20,6 @@ function merchantPage({ navigation: { goBack } }) {
     dispatch(getMerchants())
   }, [dispatch])
   const merchants = useSelector(state => state.merchants)
-  function goToHome() {
-    navigation.navigate('Home')
-  }
 
   function goToMap(destination) {
     navigation.navigate('Map', { destination })
@@ -41,7 +38,7 @@ function merchantPage({ navigation: { goBack } }) {
 
         <View style={styles.header}>
           <TouchableOpacity
-            onPress={goToHome}
+            onPress={() => goBack()}
             style={{
               height: 40,
               justifyContent: 'center',

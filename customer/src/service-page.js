@@ -32,7 +32,7 @@ function servicePage({ navigation: { goBack }, route }) {
           style={{
             height: 40,
             justifyContent: 'center',
-            marginRight: 20
+            marginRight: 10
           }}
         >
           <Text>
@@ -45,16 +45,15 @@ function servicePage({ navigation: { goBack }, route }) {
         <Text style={{
           height: 40,
           color: '#2b2b2b',
-          fontSize: 30,
-          fontWeight: 'bold',
-          alignItems: 'center'
-        }}>All
-          <Text style={{
-            fontWeight: '500'
-          }}> Services</Text>
+          fontSize: 22.5,
+          textAlignVertical: 'center',
+          fontWeight: 'bold'
+        }}>Steam Motor Depan BSI
+          <Text> Services</Text>
         </Text>
       </View>
       <ScrollView style={styles.main}>
+        {/* <Text>Steam Motor Depan BSI</Text> */}
         {/* Ini nanti tinggal di map berdasarkan jumlah merchat */}
         {
           services.map(service => {
