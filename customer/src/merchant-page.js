@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getMerchants } from '../store/actions'
+import { getMerchants, setMerchantName } from '../store/actions'
 import { StyleSheet, View, Text, TouchableOpacity, Button, Linking } from 'react-native'
 import Constant from 'expo-constants'
 import { useNavigation } from '@react-navigation/native'
@@ -25,8 +25,10 @@ function merchantPage({ navigation: { goBack } }) {
     navigation.navigate('Map', { destination })
   }
 
-  function goToService(id, address) {
-    navigation.navigate('Service', { id, address })
+  function goToService(merchant) {
+    const { id, address, name } = merchant
+    dispatch(setMerchantName(name))
+    navigation.navigate('Service', { id, address, name })
   }
 
   return (
@@ -73,7 +75,7 @@ function merchantPage({ navigation: { goBack } }) {
               <Text style={styles.title}>{merchant.name}</Text>
               <View style={styles.option}>
                 <TouchableOpacity
-                  onPress={() => goToService(merchant.id, merchant.address)}
+                  onPress={() => goToService(merchant)}
                 >
                   <LinearGradient
                     colors={['#f86674', '#f9af8b']}

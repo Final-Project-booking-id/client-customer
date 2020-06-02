@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 function servicePage({ navigation: { goBack }, route }) {
   const dispatch = useDispatch()
-  const { id, address } = route.params
+  const { id, address, name } = route.params
   useEffect(() => {
     dispatch(getServicesByMerchantId(id))
   }, [])
@@ -21,7 +21,7 @@ function servicePage({ navigation: { goBack }, route }) {
   const desc = 'Premium Auto Detailing hadir dengan Premium Car Wash, Interior Vacuum, Tire Polish dan didukung oleh pegawai yang berpengalaman dibidangnya'
   const services = useSelector(state => state.services)
   function goToDetail(service) {
-    navigation.navigate('Detail', { address, service })
+    navigation.navigate('Detail', { address, service, name })
   }
 
   return (
@@ -48,7 +48,7 @@ function servicePage({ navigation: { goBack }, route }) {
           fontSize: 22.5,
           textAlignVertical: 'center',
           fontWeight: 'bold'
-        }}>Steam Motor Depan BSI
+        }}>{name}
           <Text> Services</Text>
         </Text>
       </View>

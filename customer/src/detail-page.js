@@ -15,16 +15,20 @@ import QRCode from 'react-native-qrcode-svg'
 function detailPage({ navigation: { goBack }, route }) {
   const dispatch = useDispatch()
   const navigation = useNavigation()
-  const { address, service } = route.params
+  const successBook = useSelector(state => state.successBook)
+  // console.log(successBook, 'success??')
+  const { address, service, name } = route.params
   function goToMap() {
     navigation.navigate('Map', { destination: address })
   }
   const CustomerId = useSelector(state => state.CustomerId)
   const token = useSelector(state => state.token)
-  console.log(token, "<<<<<")
+  // console.log(token, "<<<<<")
   function Book() {
     dispatch(bookQueue(CustomerId, service.id))
-    // navigation.navigate('Merchant')
+    if (successBook) {
+      return navigation.navigate('Book', { name })
+    }
     // return (
 
     // )

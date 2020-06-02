@@ -5,15 +5,21 @@ import { useNavigation } from '@react-navigation/native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { LinearGradient } from 'expo-linear-gradient'
+import QRCode from 'react-native-qrcode-svg'
+import { useSelector } from 'react-redux'
 
-function detailPage({ navigation: { goBack } }) {
+function detailPage({ navigation: { goBack }, route }) {
+  const { name } = route.params
   const navigation = useNavigation()
-
+  function goToHome() {
+    navigation.navigate('Home')
+  }
+  const token = useSelector(state => state.token)
   return (
     <View style={styles.container}>
       <View style={styles.options}>
         <TouchableOpacity
-          onPress={() => goBack()}
+          onPress={() => goToHome()}
           style={{
             height: 40,
             justifyContent: 'center',
@@ -44,7 +50,7 @@ function detailPage({ navigation: { goBack } }) {
       <View style={styles.info}>
         <View style={styles.sectionOne}>
           <Text style={styles.title}>
-            Steam Motor Depan BSI
+            {name}
           </Text>
         </View>
         <View style={styles.sectionTwo}>
@@ -54,10 +60,13 @@ function detailPage({ navigation: { goBack } }) {
       </View>
       <View style={styles.qrcode}>
         {/* SIMPEN QR CODENYA DISINI */}
-        <Text>lorem ipsum</Text>
+        (<QRCode
+          value={token}
+          size={250}
+        />)
       </View>
-      <View style={{alignItems: 'center'}}>
-        
+      <View style={{ alignItems: 'center' }}>
+
       </View>
     </View>
   )
@@ -73,7 +82,7 @@ const styles = StyleSheet.create({
   },
   options: {
     height: '10%',
-    flexDirection: 'row', 
+    flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
   },
@@ -129,7 +138,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  
+
 })
 
 export default detailPage

@@ -10,6 +10,23 @@ export const SET_TOKEN = 'SET_TOKEN'
 export const SET_SERVICE_ID_PENDING = 'SET_SERVICE_PENDING'
 export const SET_QUEUE_ID = 'SET_QUEUE_ID'
 export const SET_IS_UPDATE = 'SET_IS_UPDATE'
+export const SET_MERCHANT_NAME = 'SET_MERCHANT_NAME'
+export const SET_SUCCESS_BOOK = 'SUCCESS'
+
+
+export const setSuccessBook = (status) => {
+  return {
+    type: status,
+    payload: status
+  }
+}
+
+export const setMerchantName = (name) => {
+  return {
+    type: SET_MERCHANT_NAME,
+    payload: name
+  }
+}
 
 export const setIsUpdate = (status) => {
   return {
@@ -144,12 +161,15 @@ export const bookQueue = (CustomerId, ServiceId) => {
     postQueue(CustomerId, ServiceId)
       .then(({ data }) => {
         dispatch(setQueueId(data.id))
+        dispatch(setSuccessBook(true))
         return readTokenQueue(data.id)
       })
       .then(({ data }) => {
         dispatch(setToken(data.token))
       })
-      .catch(console.log)
+      .catch(err => {
+        setSuccessBook(false)
+      })
   }
 }
 
