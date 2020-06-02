@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = "http://192.168.1.14:3000"
+const baseUrl = "http://192.168.0.7:3000"
 export const SET_QUEUES = 'SET_QUEUES'
 export const SET_DESTINATION = 'SET_DESTINATION'
 export const SET_MERCHANTS = 'SET_MERCHANTS'
@@ -115,17 +115,17 @@ export const getServicesByMerchantId = (id) => {
   }
 }
 
-export const fetchQueues = () => {
-  return axios.get(baseUrl + "/queues")
+export const fetchQueuesByServiceId = (ServiceId) => {
+  return axios.get(baseUrl + `/queue/${ServiceId}`)
 }
 
-export const getQueues = () => {
+export const getQueuesByServiceId = (ServiceId) => {
   return dispatch => {
-    fetchQueues
+    fetchQueuesByServiceId(ServiceId)
       .then(({ data }) => {
         dispatch(setQueues(data))
       })
-      .catch(err => dispatch(setQueues(err)))
+      .catch(console.log)
   }
 }
 

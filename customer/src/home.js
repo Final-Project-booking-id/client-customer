@@ -1,30 +1,56 @@
 import React, { useEffect } from 'react'
+import io from 'socket.io-client'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import Constant from 'expo-constants'
 import { useDispatch, useSelector } from 'react-redux'
-import { getQueues } from '../store/actions'
+import { getQueuesByServiceId, setIsUpdate } from '../store/actions'
 import CarImage from '../CarImage'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faRedoAlt } from '@fortawesome/free-solid-svg-icons'
 
+const ENDPOINT = 'http://localhost:3000'
+
 function home() {
   const navigation = useNavigation()
   const dispatch = useDispatch()
   const queues = useSelector(state => state.queues)
+  const isUpdate = useSelector(state => state.isUpdate)
+  const ServiceId = useSelector(state => state.ServiceId)
 
   function goToMerchant() {
     navigation.navigate('Merchant')
+  }
+
+  const UpdateButton = () => {
+    return (<TouchableOpacity>
+      <FontAwesomeIcon
+        style={{ color: '#ffd26a' }}
+        icon={faRedoAlt}
+        onPress={() => dispatch(getQueuesByServiceId(ServiceId))}
+      />
+    </TouchableOpacity>)
   }
 
   function goToBooking() {
     navigation.navigate('Book')
   }
 
-  // useEffect(() => {
-  //   dispatch(getQueues())
-  // }, [dispatch, getQueues])
-  // console.log(queues)
+  const socket = io(ENDPOINT)
+  useEffect(() => {
+    dispatch(getQueuesByServiceId(ServiceId))
+  }, [dispatch])
+  useEffect(() => {
+    // socket.emit("Client", (data) => {
+    // })
+    socket.on("Server", data => {
+      if (data.toLowerCase() === 'updated') {
+        dispatch(setIsUpdate(true))
+      }
+    })
+
+  }, [ENDPOINT, dispatch])
+  console.log(queues)
 
   return (
     <View style={styles.container}>
@@ -32,12 +58,9 @@ function home() {
         <Text style={[styles.font, styles.title]}>Washry</Text>
         <View style={{ flexDirection: 'row' }}>
           <Text style={[styles.font, { marginRight: 10 }]}>You are in the 20 queue</Text>
-          <TouchableOpacity>
-            <FontAwesomeIcon
-              style={{ color: '#ffd26a' }}
-              icon={faRedoAlt}
-            />
-          </TouchableOpacity>
+          {
+            !isUpdate ? <UpdateButton /> : <></>
+          }
         </View>
       </View>
 
