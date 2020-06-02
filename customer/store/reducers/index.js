@@ -1,4 +1,4 @@
-import { SET_QUEUES, SET_MERCHANTS, SET_SERVICES, GET_MY_COORDINATES, SET_CUSTOMER, SET_TOKEN, SET_SERVICE_ID_PENDING, SET_QUEUE_ID } from '../actions'
+import { SET_QUEUES, SET_MERCHANTS, SET_SERVICES, GET_MY_COORDINATES, SET_CUSTOMER, SET_TOKEN, SET_SERVICE_ID_PENDING, SET_QUEUE_ID, SET_IS_UPDATE } from '../actions'
 
 const initialState = {
   CustomerId: 7,
@@ -9,7 +9,8 @@ const initialState = {
   token: '',
   ServiceId: '',
   QueueId: '',
-  isUpdate: false
+  isUpdate: false,
+  statusQueue: ''
 }
 
 
@@ -17,6 +18,8 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   const { type, payload } = action
   switch (type) {
+    case SET_IS_UPDATE:
+      return { ...state, isUpdate: payload }
     case SET_QUEUE_ID:
       return { ...state, QueueId: payload }
     case SET_SERVICE_ID_PENDING:
