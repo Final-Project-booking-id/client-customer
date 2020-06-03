@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
+import Constant from 'expo-constants'
 import { StyleSheet, View, Text, TouchableOpacity, TextInput } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { setPoliceNumber, setPassword, postRegister, dummyLogin, postLogin } from '../store/actions'
 import { useNavigation } from '@react-navigation/native'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 export default function RegisterPage() {
     const dispatch = useDispatch()
@@ -22,33 +25,53 @@ export default function RegisterPage() {
     // }
     const login = () => navigation.navigate('Login')
 
-
     return (
         <View style={styles.container}>
-            <TextInput style={styles.inputBox}
-                underlineColorAndroid='rgba(0,0,0,0)'
-                placeholder="Police Number"
-                placeholderTextColor="#ffffff"
-                selectionColor="#fff"
-                keyboardType="email-address"
-                onChangeText={text => dispatch(setPoliceNumber(text))}
-            // onSubmitEditing={() => this.password.focus()}
-            />
-            <TextInput style={styles.inputBox}
-                underlineColorAndroid='rgba(0,0,0,0)'
-                placeholder="Password"
-                secureTextEntry={true}
-                placeholderTextColor="#ffffff"
-                onChangeText={text => dispatch(setPassword(text))}
-            // ref={(input) => this.password = input}
-            />
-            <TouchableOpacity style={styles.button} onPress={register}>
-                <Text style={styles.buttonText}>Register</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={login}>
-                <Text style={styles.buttonText}>Login</Text>
-            </TouchableOpacity>
-            <Text>{JSON.stringify(customer)}</Text>
+            <View style={styles.header}>
+                <Text style={[styles.headerText, { color: '#1a1a1a' }]}>Welcome,</Text>
+                <Text style={[styles.headerText, , { color: '#b9bfcb' }]}>sign up to join us</Text>
+            </View>
+
+            <View style={styles.form}>
+                    <TextInput style={styles.inputBox}
+                        autoCapitalize='characters'
+                        underlineColorAndroid='rgba(0,0,0,0)'
+                        placeholder="Police Number"
+                        placeholderTextColor="#ffffff"
+                        selectionColor="#fff"
+                        keyboardType="email-address"
+                        onChangeText={text => dispatch(setPoliceNumber(text))}
+                    // onSubmitEditing={() => this.password.focus()}
+                    />
+                    <TextInput style={styles.inputBox}
+                        underlineColorAndroid='rgba(0,0,0,0)'
+                        placeholder="Password"
+                        secureTextEntry={true}
+                        placeholderTextColor="#ffffff"
+                        onChangeText={text => dispatch(setPassword(text))}
+                    // ref={(input) => this.password = input}
+                    />
+            </View>
+
+            <View style={styles.registerGroup}>
+                <Text style={{ fontSize: 35, fontWeight: 'bold', color: '#e9eaef' }}>Sign Up</Text>
+                <TouchableOpacity
+                    style={styles.registerbtn}
+                    onPress={register}
+                >
+                    <FontAwesomeIcon
+                        style={{ color: '#30384d' }}
+                        icon={faArrowRight}
+                        />
+                </TouchableOpacity>
+            </View>
+
+            <View style={styles.login}>
+                <TouchableOpacity onPress={login}>
+                    <Text style={styles.loginbtn}>Sign in</Text>
+                </TouchableOpacity>
+            </View>
+
         </View>
     )
 }
@@ -56,57 +79,56 @@ export default function RegisterPage() {
 const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
+        paddingTop: Constant.statusBarHeight,
+        padding: 35,
+        backgroundColor: '#3d4558',
+        justifyContent: 'space-between'
+    },
+    header: {
+        width: '100%',
+        height: '45%',
+        justifyContent: 'center'
+    },
+    headerText: {
+        fontSize: 45,
+        fontWeight: 'bold'
+    },
+    form: {
+        width: '100%',
+        height: '25%'
+    },
+    inputBox: {
+        width: '100%',
+        height: 40,
+        marginBottom: 20,
+        paddingBottom: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: '#e9eaef',
+        color: '#ffffff'
+    },
+    registerGroup: {
+        width: '100%',
+        height: '20%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    registerbtn: {
+        width: 75,
+        height: 75,
+        backgroundColor: '#e9eaef',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#3d4558',
+        borderRadius: 75
     },
-
-
-
-    inputBox: {
-
-        width: 300,
-
-        backgroundColor: 'rgba(255, 255,255,0.2)',
-
-        borderRadius: 25,
-
-        paddingHorizontal: 16,
-
-        fontSize: 16,
-
-        color: '#ffffff',
-
-        marginVertical: 10
-
+    login: {
+        width: '100%',
+        height: 'auto'
     },
-
-    button: {
-
-        width: 300,
-
-        backgroundColor: '#1c313a',
-
-        borderRadius: 25,
-
-        marginVertical: 10,
-
-        paddingVertical: 13
-
-    },
-
-    buttonText: {
-
-        fontSize: 16,
-
-        fontWeight: '500',
-
-        color: '#ffffff',
-
-        textAlign: 'center'
-
+    loginbtn: {
+        fontSize: 15,
+        fontWeight: 'bold',
+        color: '#e9eaef',
+        textDecorationLine: 'underline'
     }
-
-
-
 });

@@ -22,13 +22,13 @@ export default function App() {
         {/* <NavigationComponent /> */}
         <Stack.Navigator>
           <Stack.Screen
-            name='Register'
-            component={RegisterPage}
+            name='Login'
+            component={LoginPage}
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name='Login'
-            component={LoginPage}
+            name='Register'
+            component={RegisterPage}
             options={{ headerShown: false }}
           />
           <Stack.Screen
