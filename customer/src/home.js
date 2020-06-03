@@ -10,6 +10,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faRedoAlt } from '@fortawesome/free-solid-svg-icons'
 
 const ENDPOINT = 'http://localhost:3000'
+let options = {
+  enableHighAccuracy: true
+};
+let currentLocation = []
+function success(pos) {
+  let crd = pos.coords;
+
+  currentLocation.push(crd.latitude)
+  currentLocation.push(crd.longitude)
+}
+let socket
 function home() {
   console.disableYellowBox = true
   const queueRank = useSelector(state => state.queueRank)
@@ -19,7 +30,18 @@ function home() {
   const queues = useSelector(state => state.queues)
   const isUpdate = useSelector(state => state.isUpdate)
   const queueExist = useSelector(state => state.QueueId)
-  // console.log(isUpdate)
+  console.log(CustomerId)
+
+  useEffect(() => {
+    socket = io(ENDPOINT)
+    socket.on("Server", data => {
+      if (data.toLowerCase() === 'updated') {
+        dispatch(setIsUpdate(true))
+        return refetchQueues()
+      }
+    })
+
+  }, [ENDPOINT, dispatch, setIsUpdate])
   useEffect(() => {
     dispatch(getQueuesByServiceId(ServiceId))
   }, [dispatch])
@@ -49,7 +71,11 @@ function home() {
   }, [refetchQueues])
 
   function goToBooking() {
-    navigation.navigate('Book')
+    if (queueExist) {
+      navigation.navigate('Book')
+    } else {
+      alert("You don't have booking yet! \n Book One")
+    }
   }
   // console.log(queues)
   let numberQueue = 0
@@ -59,20 +85,9 @@ function home() {
     })
   }
   dispatch(setQueueRank(numberQueue))
-  console.log("====", queueRank, 'ANTRIAN LU')
+  // console.log("====", queueRank, 'ANTRIAN LU')
 
-  useEffect(() => {
-    // socket.emit("Client", (data) => {
-    // })
-    socket = io(ENDPOINT)
-    socket.on("Server", data => {
-      // console.log("==========", data, "==============")
-      if (data.toLowerCase() === 'updated') {
-        dispatch(setIsUpdate(true))
-      }
-    })
 
-  }, [ENDPOINT, dispatch, setIsUpdate])
   // console.log(queues)
 
   return (

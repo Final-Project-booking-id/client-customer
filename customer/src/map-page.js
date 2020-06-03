@@ -15,10 +15,6 @@ function success(pos) {
 
   currentLocation.push(crd.latitude)
   currentLocation.push(crd.longitude)
-  // console.log('Your current position is:');
-  // console.log(`Latitude : ${crd.latitude}`);
-  // console.log(`Longitude: ${crd.longitude}`);
-  // console.log(`More or less ${crd.accuracy} meters.`);
 }
 
 function error(err) {
@@ -56,7 +52,7 @@ export default function MapPage({ route }) {
           <MapViewDirections
             origin={{ latitude: +currentLocation[0], longitude: +currentLocation[1] }}
             destination={{ latitude: +destination.split(",")[0], longitude: +destination.split(",")[1] }}
-            apikey={'AIzaSyBfRZ4teg55GyBfA7mtR-NlIDugDXYELSc'}
+            apikey={'AIzaSyBtq8A1V9v9brUhDPcG3Ap0_zO8KPywdeo'}
             strokeWidth={4}
             strokeColor={'#ffa41b'}
             onReady={result => console.log(result.distance)}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native'
 import Constant from 'expo-constants'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
@@ -8,7 +8,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { ScrollView } from 'react-native-gesture-handler'
 import servicePage from './service-page'
 import { useSelector, useDispatch } from 'react-redux'
-import { bookQueue, readTokenQueue } from '../store/actions'
+import { bookQueue, readTokenQueue, getQueuesByServiceId } from '../store/actions'
 import QRCode from 'react-native-qrcode-svg'
 
 
@@ -24,9 +24,17 @@ function detailPage({ navigation: { goBack }, route }) {
   const CustomerId = useSelector(state => state.CustomerId)
   const token = useSelector(state => state.token)
   // console.log(token, "<<<<<")
+  const refetchQueues = useCallback(() => {
+    dispatch(getQueuesByServiceId(service.id))
+  }, [dispatch, getQueuesByServiceId])
+
+  useEffect(() => {
+    refetchQueues()
+  }, [refetchQueues])
   function Book() {
     dispatch(bookQueue(CustomerId, service.id))
       .then(response => {
+        refetchQueues()
         navigation.navigate('Book', { name })
       })
       .catch(err => {

@@ -1,4 +1,7 @@
 import axios from 'axios'
+import io from 'socket.io-client'
+
+let socket;
 const baseUrl = "http://192.168.0.7:3000"
 export const SET_QUEUES = 'SET_QUEUES'
 export const SET_DESTINATION = 'SET_DESTINATION'
@@ -13,6 +16,22 @@ export const SET_IS_UPDATE = 'SET_IS_UPDATE'
 export const SET_MERCHANT_NAME = 'SET_MERCHANT_NAME'
 export const SET_SUCCESS_BOOK = 'SUCCESS'
 export const SET_QUEUE_RANK = 'SET_QUEUE_RANK'
+export const SET_POLICE_NUMBER = 'SET_POLICE_NUMBER'
+export const SET_PASSWORD = 'SET_PASSWORD'
+
+export const setPoliceNumber = (plat) => {
+  return {
+    type: SET_POLICE_NUMBER,
+    payload: plat
+  }
+}
+
+export const setPassword = (pass) => {
+  return {
+    type: SET_PASSWORD,
+    payload: pass
+  }
+}
 
 export const setQueueRank = (number) => {
   return {
@@ -90,7 +109,6 @@ export const setServices = (data) => {
     payload: data
   }
 }
-
 
 
 // export const setDestination = (coordinate) => {
@@ -187,8 +205,59 @@ export const bookQueue = (CustomerId, ServiceId) => {
   }
 }
 
+
+export const postRegister = (customer) => {
+  const { policeNumber, password } = customer
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      axios({
+        method: 'post',
+        url: baseUrl + '/register',
+        data: {
+          police_number: policeNumber,
+          password
+        }
+      }).then(({ data }) => {
+        dispatch(setCustomer(data.id))
+        return resolve()
+      }).catch(err => {
+        alert('Invalid Input')
+        return reject(err)
+      })
+
+    })
+  }
+
+}
+
+
+export const postLogin = (customer) => {
+  const { policeNumber, password } = customer
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      axios({
+        method: 'post',
+        url: baseUrl + '/login',
+        data: {
+          police_number: policeNumber,
+          password
+        }
+      }).then(({ data }) => {
+        dispatch(setCustomer(data.id))
+        return resolve()
+      }).catch(err => {
+        alert('Invalid Input')
+        return reject(err)
+      })
+
+    })
+  }
+
+}
+
+
 export const dummyLogin = (num) => {
-  return ((dispatch) => {
+  return (dispatch) => {
     if (num === "A 111 AB") {
       dispatch(setCustomer(1))
     } else if (num === "B 222 CD") {
@@ -208,11 +277,12 @@ export const dummyLogin = (num) => {
     } else if (num === "I 999 QR") {
       dispatch(setCustomer(9))
     }
-  })
+  }
 }
 
 export const updateStatus = (id) => {
   return ((dispatch) => {
+    socket = io(baseUrl)
     return new Promise((resolve, reject) => {
       readTokenQueue(id)
         .then(({ data }) => {
@@ -238,20 +308,23 @@ export const updateStatus = (id) => {
         })
         .then(response => {
           // alert(`Update! Order id ${response.data.id} is now ${response.data.status}`)
-          console.log(response.data)
+          // console.log(response.data)
+          socket.emit("Client", 'updated')
           dispatch(setQueueId(0))
+          dispatch(setToken(''))
+          dispatch(setQueueRank(''))
           return resolve()
         })
         .catch(err => {
           alert(err)
-          console.log(err)
+          // console.log(err)
           return resolve(err)
         })
     })
   })
 }
 
-export const readTokenQueue = async (QueueId) => {
+export const readTokenQueue = (QueueId) => {
   return axios.get(baseUrl + `/queue/${QueueId}`)
   // return async dispatch => {
   // const { data } = await axios.get(baseUrl + `/queue/${QueueId}`)

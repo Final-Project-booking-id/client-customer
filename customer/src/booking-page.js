@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import Constant from 'expo-constants'
 import { useNavigation } from '@react-navigation/native'
@@ -19,9 +19,10 @@ function detailPage({ navigation: { goBack }, route }) {
     navigation.navigate('Home')
   }
   const QueueId = useSelector(state => state.QueueId)
-  alert(QueueId)
+  // alert(QueueId)
   function cancel(QueueId) {
     dispatch(updateStatus(QueueId))
+    navigation.navigate('Home')
   }
   const token = useSelector(state => state.token)
   return (
@@ -63,7 +64,7 @@ function detailPage({ navigation: { goBack }, route }) {
           </Text>
         </View>
         <View style={styles.sectionTwo}>
-          <Text style={styles.queueInfo}>Your Are #{}</Text>
+          <Text style={styles.queueInfo}>Your Are #{queueRank}</Text>
           {/* <Text style={styles.queueInfo}>Remaining queue: 5</Text> */}
         </View>
       </View>
