@@ -259,7 +259,7 @@ export const postLogin = (customer) => {
         return resolve()
       })
         .catch(err => {
-          alert(`${policeNumber} ${password}`)
+          alert("You Can't Login Now")
           return reject(err)
         })
 
