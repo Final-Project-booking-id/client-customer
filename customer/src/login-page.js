@@ -8,6 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 export default function LoginPage({ navigation: { goBack } }) {
+    console.disableYellowBox = true
+
     const dispatch = useDispatch()
     const navigation = useNavigation()
     const policeNumber = useSelector(state => state.customer.policeNumber)

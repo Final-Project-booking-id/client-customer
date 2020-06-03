@@ -3,7 +3,7 @@ import io from 'socket.io-client'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import Constant from 'expo-constants'
 import { useDispatch, useSelector } from 'react-redux'
-import { getQueuesByServiceId, setIsUpdate, setQueueRank, setCustomer, setPassword, setPoliceNumber } from '../store/actions'
+import { getQueuesByServiceId, setIsUpdate, setQueueRank, setCustomer, setPassword, setPoliceNumber, setQueueId, setToken } from '../store/actions'
 import CarImage from '../CarImage'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
@@ -28,7 +28,8 @@ navigator.geolocation.getCurrentPosition(success, error, options);
 let socket
 function home() {
   console.disableYellowBox = true
-  console.log(currentLocation)
+  // console.log(currentLocation)
+  const policeNumber = useSelector(state => state.customer.policeNumber)
   const queueRank = useSelector(state => state.queueRank)
   const navigation = useNavigation()
   const CustomerId = useSelector(state => state.CustomerId)
@@ -36,11 +37,16 @@ function home() {
   const queues = useSelector(state => state.queues)
   const isUpdate = useSelector(state => state.isUpdate)
   const queueExist = useSelector(state => state.QueueId)
-  // console.log(CustomerId)
+  const token = useSelector(state => state.token)
+  // console.log(token)
   const logout = () => {
     dispatch(setCustomer(''))
     dispatch(setPoliceNumber(''))
     dispatch(setPassword(''))
+    dispatch(setQueueId(0))
+    dispatch(setToken(''))
+    dispatch(setPassword(''))
+    dispatch(setPoliceNumber(''))
     navigation.navigate('Login')
   }
 
@@ -128,7 +134,9 @@ function home() {
           /> */}
 
           <Text style={{ fontSize: 20 }}>LOGOUT</Text>
+
         </TouchableOpacity>
+        <Text style={{ fontSize: 20 }}>HI "{policeNumber}"!</Text>
       </View>
 
       <View style={styles.image}>

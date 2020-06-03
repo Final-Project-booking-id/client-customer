@@ -244,11 +244,17 @@ export const postLogin = (customer) => {
         }
       }).then(({ data }) => {
         dispatch(setCustomer(data.id))
+        dispatch(setQueueId(data.QueueId))
+        // console.log('INI DATAA', data)
+        return readTokenQueue(data.QueueId)
+      }).then(({ data }) => {
+        dispatch(setToken(data.token))
         return resolve()
-      }).catch(err => {
-        alert('Invalid Input')
-        return reject(err)
       })
+        .catch(err => {
+          alert('Invalid Input')
+          return reject(err)
+        })
 
     })
   }
