@@ -2,7 +2,7 @@ import axios from 'axios'
 import io from 'socket.io-client'
 
 let socket;
-const baseUrl = "http://192.168.1.14:3000"
+const baseUrl = "http://192.168.0.7:3000"
 export const SET_QUEUES = 'SET_QUEUES'
 export const SET_DESTINATION = 'SET_DESTINATION'
 export const SET_MERCHANTS = 'SET_MERCHANTS'
@@ -193,6 +193,7 @@ export const bookQueue = (CustomerId, ServiceId) => {
           return readTokenQueue(data.id)
         })
         .then(({ data }) => {
+          // console.log("=====INI ")
           dispatch(setToken(data.token))
           return resolve()
         })
