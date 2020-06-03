@@ -3,7 +3,7 @@ import io from 'socket.io-client'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import Constant from 'expo-constants'
 import { useDispatch, useSelector } from 'react-redux'
-import { getQueuesByServiceId, setIsUpdate, setQueueRank } from '../store/actions'
+import { getQueuesByServiceId, setIsUpdate, setQueueRank, setCustomer, setPassword, setPoliceNumber } from '../store/actions'
 import CarImage from '../CarImage'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
@@ -30,7 +30,13 @@ function home() {
   const queues = useSelector(state => state.queues)
   const isUpdate = useSelector(state => state.isUpdate)
   const queueExist = useSelector(state => state.QueueId)
-  console.log(CustomerId)
+  // console.log(CustomerId)
+  const logout = () => {
+    dispatch(setCustomer(''))
+    dispatch(setPoliceNumber(''))
+    dispatch(setPassword(''))
+    navigation.navigate('Login')
+  }
 
   useEffect(() => {
     socket = io(ENDPOINT)
@@ -40,8 +46,10 @@ function home() {
         return refetchQueues()
       }
     })
-
-  }, [ENDPOINT, dispatch, setIsUpdate])
+    return () => {
+      socket.off()
+    }
+  }, [ENDPOINT])
   useEffect(() => {
     dispatch(getQueuesByServiceId(ServiceId))
   }, [dispatch])
@@ -79,13 +87,17 @@ function home() {
   }
   // console.log(queues)
   let numberQueue = 0
+  let time = 0
   if (queues.length) {
     queues.map((queue, el) => {
-      if (queue.CustomerId === CustomerId) numberQueue = +el + 1
+      if (queue.CustomerId === CustomerId) {
+        numberQueue = +el + 1
+        time = el * 30
+      }
     })
   }
   dispatch(setQueueRank(numberQueue))
-  // console.log("====", queueRank, 'ANTRIAN LU')
+  // console.log("====", queueRank, 'ANTRIAN LU', time)
 
 
   // console.log(queues)
@@ -96,11 +108,21 @@ function home() {
         <Text style={[styles.font, styles.title]}>Washry</Text>
         <View style={{ flexDirection: 'row' }}>
           {(queueExist === 0) ? <Text style={{ color: '#3d4558' }}>...</Text> :
-            <Text style={[styles.font, { marginRight: 10 }]}>You are in the #{numberQueue} queue</Text>}
+            <><Text style={[styles.font, { marginRight: 10 }]}>You are in the #{numberQueue} queue</Text>
+              <Text style={{ fontSize: 15 }}>ESTIMATION TIME 60 Minutes</Text></>}
           {
             isUpdate ? <UpdateButton /> : <></>
           }
         </View>
+        <TouchableOpacity onPress={logout}>
+          {/* <FontAwesomeIcon
+            style={{ color: '#ffd26a' }}
+            icon={faRedoAlt}
+            onPress={refetchQueues}
+          /> */}
+
+          <Text style={{ fontSize: 20 }}>LOGOUT</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.image}>

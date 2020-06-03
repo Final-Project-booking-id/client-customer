@@ -48,6 +48,7 @@ export default function RegisterPage() {
             <TouchableOpacity style={styles.button} onPress={login}>
                 <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
+            <Text>{JSON.stringify(customer)}</Text>
         </View>
     )
 }

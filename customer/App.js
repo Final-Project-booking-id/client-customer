@@ -10,7 +10,7 @@ import ServicePage from './src/service-page'
 import DetailPage from './src/detail-page'
 import BookingPage from './src/booking-page'
 import RegisterPage from './src/register-page';
-import LoginPage from './store/login-page'
+import LoginPage from './src/login-page'
 
 const Stack = createStackNavigator()
 
