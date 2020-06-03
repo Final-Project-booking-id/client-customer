@@ -176,7 +176,6 @@ const styles = StyleSheet.create({
     marginRight: 0
   },
   title: {
-    marginLeft: 10,
     color: '#eff2f6',
     fontSize: 15,
     fontWeight: '600'

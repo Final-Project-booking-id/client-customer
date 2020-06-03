@@ -130,14 +130,9 @@ function detailPage({ navigation: { goBack }, route }) {
           {/* Desc */}
           <View style={{ width: '100%', alignItems: 'center' }}>
             <View style={styles.topDesc}></View>
-            {/* {
-              !token ? (<Text style={styles.desc}>
-                {service.description}
-              </Text>) : (<QRCode
-                value={token}
-                size={250}
-              />)
-            } */}
+            <Text style={styles.desc}>
+              {service.description}
+            </Text>
 
             <View style={styles.bottomDesc}></View>
           </View>

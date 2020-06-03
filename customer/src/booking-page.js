@@ -64,7 +64,7 @@ function detailPage({ navigation: { goBack }, route }) {
           </Text>
         </View>
         <View style={styles.sectionTwo}>
-          <Text style={styles.queueInfo}>Your Are #{queueRank}</Text>
+          <Text style={styles.queueInfo}>Your queue number: {queueRank}</Text>
           {/* <Text style={styles.queueInfo}>Remaining queue: 5</Text> */}
         </View>
       </View>
@@ -121,11 +121,10 @@ const styles = StyleSheet.create({
     height: '65%',
     justifyContent: 'center',
     alignItems: 'center'
-    // backgroundColor: 'aqua'
   },
   title: {
     textAlign: 'center',
-    fontSize: 45,
+    fontSize: 55,
   },
   sectionTwo: {
     width: '100%',
@@ -137,7 +136,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   queueInfo: {
-    fontSize: 20,
+    fontSize: 25,
     color: '#e9eaee',
     fontWeight: '700'
   },

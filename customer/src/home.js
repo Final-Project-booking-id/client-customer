@@ -7,7 +7,7 @@ import { getQueuesByServiceId, setIsUpdate, setQueueRank, setCustomer, setPasswo
 import CarImage from '../CarImage'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faRedoAlt } from '@fortawesome/free-solid-svg-icons'
+import { faRedoAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
 const ENDPOINT = 'http://localhost:3000'
 let options = {
@@ -116,27 +116,28 @@ function home() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.signout}>
+        <TouchableOpacity onPress={logout}>
+          <FontAwesomeIcon
+            style={{ color: '#63687a' }}
+            size={25}
+            icon={faSignOutAlt}
+          />
+        </TouchableOpacity>
+      </View>
       <View style={styles.main}>
         <Text style={[styles.font, styles.title]}>Washry</Text>
-        <View style={{ flexDirection: 'row' }}>
+        <View>
+          <Text style={[styles.font, {fontWeight: 'bold'}]}>Glad to see you "{policeNumber}",</Text>
           {(queueExist === 0) ? <Text style={{ color: '#3d4558' }}>...</Text> :
-            <><Text style={[styles.font, { marginRight: 10 }]}>You are in the #{numberQueue} queue</Text>
-              <Text style={{ fontSize: 15 }}>ESTIMATION TIME 60 Minutes</Text></>}
+            <>
+              <Text style={[styles.font, { marginRight: 10 }]}>Your queue number: {numberQueue}</Text>
+            </>
+          }
           {
             isUpdate ? <UpdateButton /> : <></>
           }
         </View>
-        <TouchableOpacity onPress={logout}>
-          {/* <FontAwesomeIcon
-            style={{ color: '#ffd26a' }}
-            icon={faRedoAlt}
-            onPress={refetchQueues}
-          /> */}
-
-          <Text style={{ fontSize: 20 }}>LOGOUT</Text>
-
-        </TouchableOpacity>
-        <Text style={{ fontSize: 20 }}>HI "{policeNumber}"!</Text>
       </View>
 
       <View style={styles.image}>
@@ -171,6 +172,12 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: 'space-between'
   },
+  signout: {
+    width: '100%',
+    height: '5%',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end' 
+  },
   main: {
     height: '25%',
     justifyContent: 'flex-end'
@@ -181,11 +188,12 @@ const styles = StyleSheet.create({
     fontWeight: '700'
   },
   font: {
-    color: '#eff2f6'
+    color: '#f0f1f3',
+    fontSize: 15
   },
   image: {
     alignItems: 'center',
-    height: '60%'
+    height: '50%'
   },
   option: {
     height: '10%'

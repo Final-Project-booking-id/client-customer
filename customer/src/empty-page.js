@@ -27,7 +27,7 @@ function empty({ navigation: { goBack } }) {
       </View>
       <View style={styles.image}>
         <EmptyImage />
-        <Text style={styles.text}>You don't have booking yet</Text>
+        <Text style={styles.text}>You don't have booking yet.</Text>
         <Text style={styles.text}>Let's book one</Text>
       </View>
     </View>

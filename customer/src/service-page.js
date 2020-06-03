@@ -11,15 +11,13 @@ import { useSelector, useDispatch } from 'react-redux'
 function servicePage({ navigation: { goBack }, route }) {
   const dispatch = useDispatch()
   const { id, address, name } = route.params
+  const navigation = useNavigation()
+  const services = useSelector(state => state.services)
+  
   useEffect(() => {
     dispatch(getServicesByMerchantId(id))
   }, [])
-  const navigation = useNavigation()
-
-  const premiumDesc = 'Premium Auto Detailing hadir dengan Premium Car Wash, Interior Vacuum, Engine Cleaning, Wax Protection, Tire Polish, Water Spot dan didukung oleh pegawai yang berpengalaman dibidangnya'
-
-  const desc = 'Premium Auto Detailing hadir dengan Premium Car Wash, Interior Vacuum, Tire Polish dan didukung oleh pegawai yang berpengalaman dibidangnya'
-  const services = useSelector(state => state.services)
+  
   function goToDetail(service) {
     navigation.navigate('Detail', { address, service, name })
   }
@@ -49,12 +47,10 @@ function servicePage({ navigation: { goBack }, route }) {
           textAlignVertical: 'center',
           fontWeight: 'bold'
         }}>{name}
-          <Text> Services</Text>
+          <Text style={{fontWeight: 'normal'}}> Services</Text>
         </Text>
       </View>
       <ScrollView style={styles.main}>
-        {/* <Text>Steam Motor Depan BSI</Text> */}
-        {/* Ini nanti tinggal di map berdasarkan jumlah merchat */}
         {
           services.map(service => {
             return (
@@ -72,7 +68,7 @@ function servicePage({ navigation: { goBack }, route }) {
                 </View>
                 <View style={styles.cardMain}>
                   <Text style={styles.desc}>
-                    {`${premiumDesc.substring(0, 80)}...`}
+                    {`${service.description.substring(0, 80)}...`}
                   </Text>
                 </View>
               </TouchableOpacity>
