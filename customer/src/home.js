@@ -9,7 +9,8 @@ import { useNavigation } from '@react-navigation/native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faRedoAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
-const ENDPOINT = 'http://localhost:3000'
+const ENDPOINT = 'https://hidden-beyond-33650.herokuapp.com'
+// const ENDPOINT = "http://192.168.0.7:3000"
 let options = {
   enableHighAccuracy: true
 };
@@ -26,10 +27,12 @@ function error(err) {
 navigator.geolocation.getCurrentPosition(success, error, options);
 
 let socket
-function home() {
+function home({ route }) {
+  const { name } = route.params
   console.disableYellowBox = true
   // console.log(currentLocation)
-  const policeNumber = useSelector(state => state.customer.policeNumber)
+  const customer = useSelector(state => state.customer)
+  // const policeNumber = useSelector(state => state.customer.policeNumber)
   const queueRank = useSelector(state => state.queueRank)
   const navigation = useNavigation()
   const CustomerId = useSelector(state => state.CustomerId)
@@ -38,12 +41,11 @@ function home() {
   const isUpdate = useSelector(state => state.isUpdate)
   const queueExist = useSelector(state => state.QueueId)
   const token = useSelector(state => state.token)
-  // console.log(token)
+
+  // console.log(customer)
   const logout = () => {
     dispatch(setCustomer(''))
-    dispatch(setPoliceNumber(''))
-    dispatch(setPassword(''))
-    dispatch(setQueueId(0))
+    dispatch(setQueueId(''))
     dispatch(setToken(''))
     dispatch(setPassword(''))
     dispatch(setPoliceNumber(''))
@@ -128,7 +130,7 @@ function home() {
       <View style={styles.main}>
         <Text style={[styles.font, styles.title]}>Washry</Text>
         <View>
-          <Text style={[styles.font, {fontWeight: 'bold'}]}>Glad to see you "{policeNumber}",</Text>
+          <Text style={[styles.font, { fontWeight: 'bold' }]}>Glad to see you " {name} ",</Text>
           {(queueExist === 0) ? <Text style={{ color: '#3d4558' }}>...</Text> :
             <>
               <Text style={[styles.font, { marginRight: 10 }]}>Your queue number: {numberQueue}</Text>
@@ -176,7 +178,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '5%',
     alignItems: 'flex-end',
-    justifyContent: 'flex-end' 
+    justifyContent: 'flex-end'
   },
   main: {
     height: '25%',

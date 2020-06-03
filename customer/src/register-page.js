@@ -10,12 +10,17 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 export default function RegisterPage() {
     const dispatch = useDispatch()
     const navigation = useNavigation()
-    const policeNumber = useSelector(state => state.customer.policeNumber)
-    const password = useSelector(state => state.customer.password)
+    const [policeNumber, setPoliceNumber] = useState('')
+    const [password, setPassword] = useState('')
     const customer = useSelector(state => state.customer)
     const register = () => {
-        dispatch(postRegister(customer))
-            .then(_ => navigation.navigate('Home'))
+        dispatch(postRegister({ policeNumber, password }))
+            .then(_ => {
+                const name = policeNumber
+                setPassword('')
+                setPoliceNumber('')
+                navigation.navigate('Home', { name })
+            })
             .catch(console.log)
     }
     // const login = () => {
@@ -40,7 +45,7 @@ export default function RegisterPage() {
                         placeholderTextColor="#ffffff"
                         selectionColor="#fff"
                         keyboardType="email-address"
-                        onChangeText={text => dispatch(setPoliceNumber(text))}
+                        onChangeText={text => setPoliceNumber(text)}
                     // onSubmitEditing={() => this.password.focus()}
                     />
                     <TextInput style={styles.inputBox}
@@ -48,7 +53,7 @@ export default function RegisterPage() {
                         placeholder="Password"
                         secureTextEntry={true}
                         placeholderTextColor="#ffffff"
-                        onChangeText={text => dispatch(setPassword(text))}
+                        onChangeText={text => setPassword(text)}
                     // ref={(input) => this.password = input}
                     />
             </View>

@@ -2,7 +2,8 @@ import axios from 'axios'
 import io from 'socket.io-client'
 
 let socket;
-const baseUrl = "http://192.168.0.7:3000"
+const baseUrl = "https://hidden-beyond-33650.herokuapp.com"
+// const baseUrl = "http://192.168.0.7:3000"
 export const SET_QUEUES = 'SET_QUEUES'
 export const SET_DESTINATION = 'SET_DESTINATION'
 export const SET_MERCHANTS = 'SET_MERCHANTS'
@@ -245,15 +246,20 @@ export const postLogin = (customer) => {
         }
       }).then(({ data }) => {
         dispatch(setCustomer(data.id))
-        dispatch(setQueueId(data.QueueId))
+        return axios({
+          method: 'get',
+          url: baseUrl + "/queue/unfinishedCust/" + data.id,
+        })
+        // dispatch(setQueueId(data.QueueId))
         // console.log('INI DATAA', data)
-        return readTokenQueue(data.QueueId)
+        // return readTokenQueue(data.QueueId)
       }).then(({ data }) => {
         dispatch(setToken(data.token))
+        dispatch(setQueueId(data.id))
         return resolve()
       })
         .catch(err => {
-          alert('Invalid Input')
+          alert(`${policeNumber} ${password}`)
           return reject(err)
         })
 
