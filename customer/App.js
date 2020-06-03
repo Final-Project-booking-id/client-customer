@@ -11,6 +11,7 @@ import DetailPage from './src/detail-page'
 import BookingPage from './src/booking-page'
 import RegisterPage from './src/register-page';
 import LoginPage from './src/login-page'
+import EmptyPage from './src/empty-page'
 
 const Stack = createStackNavigator()
 
@@ -59,6 +60,11 @@ export default function App() {
           <Stack.Screen
             name='Detail'
             component={DetailPage}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='Empty'
+            component={EmptyPage}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

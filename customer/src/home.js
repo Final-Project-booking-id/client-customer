@@ -74,7 +74,7 @@ function home() {
     if (queueExist) {
       navigation.navigate('Book')
     } else {
-      alert("You don't have booking yet! \n Book One")
+      navigation.navigate('Empty')
     }
   }
   // console.log(queues)
