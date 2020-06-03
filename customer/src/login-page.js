@@ -8,16 +8,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 export default function LoginPage({ navigation: { goBack } }) {
+    console.disableYellowBox = true
+
     const dispatch = useDispatch()
     const navigation = useNavigation()
     const policeNumber = useSelector(state => state.customer.policeNumber)
     const password = useSelector(state => state.customer.password)
     const customer = useSelector(state => state.customer)
-    const register = () => {
-        dispatch(postRegister(customer))
-            .then(_ => navigation.navigate('Home'))
-            .catch(console.log)
-    }
     const login = () => {
         dispatch(postLogin(customer))
             .then(_ => navigation.navigate('Home'))
