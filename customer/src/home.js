@@ -20,9 +20,15 @@ function success(pos) {
   currentLocation.push(crd.latitude)
   currentLocation.push(crd.longitude)
 }
+function error(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+}
+navigator.geolocation.getCurrentPosition(success, error, options);
+
 let socket
 function home() {
   console.disableYellowBox = true
+  console.log(currentLocation)
   const queueRank = useSelector(state => state.queueRank)
   const navigation = useNavigation()
   const CustomerId = useSelector(state => state.CustomerId)
