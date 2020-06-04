@@ -1,6 +1,8 @@
 import axios from 'axios'
 import io from 'socket.io-client'
+// import { useSelector } from 'react-redux'
 
+// const CustomerId = useSelector(state => state.CustomerId)
 let socket;
 const baseUrl = "https://hidden-beyond-33650.herokuapp.com"
 // const baseUrl = "http://192.168.0.7:3000"
@@ -234,6 +236,7 @@ export const postRegister = (customer) => {
 
 
 export const postLogin = (customer) => {
+  // let CustomerId = ''
   const { policeNumber, password } = customer
   return dispatch => {
     return new Promise((resolve, reject) => {
@@ -245,6 +248,8 @@ export const postLogin = (customer) => {
           password
         }
       }).then(({ data }) => {
+        // CustomerId = data.id
+        console.log(data)
         dispatch(setCustomer(data.id))
         return axios({
           method: 'get',
@@ -259,6 +264,7 @@ export const postLogin = (customer) => {
         return resolve()
       })
         .catch(err => {
+          console.log('=====INI ERRORR=======', err)
           alert("You Can't Login Now")
           return reject(err)
         })
