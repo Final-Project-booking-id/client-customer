@@ -77,16 +77,16 @@ function home({ route }) {
     navigation.navigate('Merchant')
   }
 
-  const UpdateButton = () => {
-    return (<TouchableOpacity>
-      <FontAwesomeIcon
-        style={{ color: '#ffd26a' }}
-        icon={faRedoAlt}
-        onPress={refetchQueues}
-      />
-      <Text style={{ fontSize: 10 }}>THERE IS AN UPDATED QUEUE</Text>
-    </TouchableOpacity>)
-  }
+  // const UpdateButton = () => {
+  //   return (<TouchableOpacity>
+  //     <FontAwesomeIcon
+  //       style={{ color: '#ffd26a' }}
+  //       icon={faRedoAlt}
+  //       onPress={refetchQueues}
+  //     />
+  //     <Text style={{ fontSize: 10 }}>THERE IS AN UPDATED QUEUE</Text>
+  //   </TouchableOpacity>)
+  // }
 
   useEffect(() => {
     refetchQueues()
@@ -133,12 +133,17 @@ function home({ route }) {
           <Text style={[styles.font, { fontWeight: 'bold' }]}>Glad to see you " {name} ",</Text>
           {(queueExist === 0) ? <Text style={{ color: '#3d4558' }}>...</Text> :
             <>
-              <Text style={[styles.font, { marginRight: 10 }]}>Your queue number: {numberQueue}</Text>
+
+              {
+                numberQueue > 0 ? (<>
+                  <Text style={[styles.font, { marginRight: 10 }]}>Your queue number: {numberQueue}</Text>
+                  <Text style={[styles.font, { marginRight: 10 }]}>Your service will start in: {numberQueue * 30} minutes</Text></>) : <></>
+              }
             </>
           }
-          {
+          {/* {
             isUpdate ? <UpdateButton /> : <></>
-          }
+          } */}
         </View>
       </View>
 

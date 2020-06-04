@@ -188,9 +188,11 @@ export const postQueue = (CustomerId, ServiceId) => {
 
 export const bookQueue = (CustomerId, ServiceId) => {
   return dispatch => {
+    socket = io(baseUrl)
     return new Promise((resolve, reject) => {
       postQueue(CustomerId, ServiceId)
         .then(({ data }) => {
+          socket.emit("Client", 'updated')
           dispatch(setQueueId(data.id))
           dispatch(setSuccessBook(true))
           return readTokenQueue(data.id)
@@ -249,7 +251,7 @@ export const postLogin = (customer) => {
         }
       }).then(({ data }) => {
         // CustomerId = data.id
-        console.log(data)
+        // console.log(data)
         dispatch(setCustomer(data.id))
         return axios({
           method: 'get',
