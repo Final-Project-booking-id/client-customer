@@ -1,17 +1,35 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMerchants, setMerchantName } from '../store/actions'
-import { StyleSheet, View, Text, TouchableOpacity, Button, Linking } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity, Button, Linking, ActivityIndicator } from 'react-native'
 import Constant from 'expo-constants'
 import { useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { ScrollView } from 'react-native-gesture-handler'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import getDistance from 'geolib/es/getDistance'
+
+
+let options = {
+  enableHighAccuracy: true
+};
+let currentLocation = []
+function success(pos) {
+  let crd = pos.coords;
+
+  currentLocation.push(crd.latitude)
+  currentLocation.push(crd.longitude)
+}
+function error(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+}
+navigator.geolocation.getCurrentPosition(success, error, options);
 
 function merchantPage({ navigation: { goBack } }) {
   const navigation = useNavigation()
   const dispatch = useDispatch()
+  const isLoading = useSelector(state => state.isUpdate)
   const QueueId = useSelector(state => state.QueueId)
   const token = useSelector(state => state.token)
   if (QueueId) console.log('ANTRI CUYY', QueueId, token)
@@ -70,9 +88,15 @@ function merchantPage({ navigation: { goBack } }) {
       <ScrollView style={styles.main}>
         {/* Ini nanti tinggal di map berdasarkan jumlah merchat */}
         {
+          isLoading ? (<ActivityIndicator size="large" color="white" />) : <></>
+        }
+        {
           merchants.map(merchant => {
+            console.log(getDistance({ latitude: currentLocation[0], longitude: currentLocation[1] }, { latitude: merchant.address.split(",")[0], longitude: merchant.address.split(",")[1] }))
             return (<View style={styles.card} key={merchant.id}>
-              <Text style={styles.title}>{merchant.name}</Text>
+              <View>
+                <Text style={styles.title}>{merchant.name}</Text>
+                <Text style={styles.title}>{getDistance({ latitude: currentLocation[0], longitude: currentLocation[1] }, { latitude: merchant.address.split(",")[0], longitude: merchant.address.split(",")[1] }) / 1000} km</Text></View>
               <View style={styles.option}>
                 <TouchableOpacity
                   onPress={() => goToService(merchant)}

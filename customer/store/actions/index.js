@@ -134,9 +134,13 @@ const fetchMerchants = () => {
 
 export const getMerchants = () => {
   return async dispatch => {
+    dispatch(setIsUpdate(true))
     try {
       const { data } = await fetchMerchants()
-      if (data) dispatch(setMerchants(data))
+      if (data) {
+        dispatch(setIsUpdate(false))
+        dispatch(setMerchants(data))
+      }
     } catch (error) {
       console.log(error)
     }
@@ -241,6 +245,7 @@ export const postLogin = (customer) => {
   // let CustomerId = ''
   const { policeNumber, password } = customer
   return dispatch => {
+    dispatch(setIsUpdate(true))
     return new Promise((resolve, reject) => {
       axios({
         method: 'post',
@@ -270,6 +275,7 @@ export const postLogin = (customer) => {
           alert("You Can't Login Now")
           return reject(err)
         })
+        .finally(_ => dispatch(setIsUpdate(false)))
 
     })
   }

@@ -8,6 +8,7 @@ import CarImage from '../CarImage'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faRedoAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import * as geolib from 'geolib'
 
 const ENDPOINT = 'https://hidden-beyond-33650.herokuapp.com'
 // const ENDPOINT = "http://192.168.0.7:3000"
