@@ -37,10 +37,11 @@ function detailPage({ navigation: { goBack }, route }) {
           }}
         >
           <Text>
-            <FontAwesomeIcon
+            {/* <FontAwesomeIcon
               style={{ color: '#f74658' }}
               icon={faChevronLeft}
-            />
+            /> */}
+            HOME
           </Text>
         </TouchableOpacity>
         <LinearGradient
